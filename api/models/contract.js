@@ -1,7 +1,7 @@
-const mongoose = require('mongoose')
-const { Schema } = mongoose;
+const { Schema, model } = require('mongoose')
 
 const schema = new Schema({
+  _id: { type: Number },
   contestants: [],
   documents: [{}],
   ambientCriteria: Boolean,
@@ -35,8 +35,8 @@ const schema = new Schema({
     type: String,
     default: 'Não preenchido',
   },
-  contracted: [{}],
-  contracting: [{}],
+  contracted: [{ type: Number, ref: 'Entity'}],
+  contracting: [{ type: Number, ref: 'Entity'}],
   cocontratantes: Boolean,
   contractingProcedureType: String,
   contractTypes: String,
@@ -51,8 +51,7 @@ const schema = new Schema({
   initialContractualPrice: String, //TODO: probably change this to Number (requires some work)
   contractStatus: Schema.Types.Mixed, // TODO: no clue
   signingDate: Date,
-  id: Number,
   description: String,
 }, { timestamps: true })
 
-module.exports = mongoose.model('Contract', schema)
+module.exports = model('Contract', schema)

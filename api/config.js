@@ -27,7 +27,7 @@ config.database = {
 config.seeder = {
   numberOfContracts: 1265000,
   step: 100,
-  url: 'http://www.base.gov.pt/base2/rest/contratos/',
+  url: 'http://www.base.gov.pt/base2/rest/',
 };
 
 module.exports = config;
