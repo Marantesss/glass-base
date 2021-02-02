@@ -1,5 +1,4 @@
-
-const { database } = require('./config.js');
+const { database } = require('./config.js')
 
 module.exports = {
   client: database.client,
@@ -13,9 +12,9 @@ module.exports = {
   pool: {
     min: 2,
     max: 10,
-    propagateCreateError: false
+    propagateCreateError: false,
   },
   migrations: {
-    tableName: 'knex_migrations'
-  }
-};
+    tableName: 'knex_migrations',
+  },
+}

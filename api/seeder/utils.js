@@ -1,7 +1,7 @@
 const formatDateFromString = (dateString) => {
   // might be null
   if (!dateString) {
-    return null;
+    return null
   }
   // original format "dd-mm-yyyy"
   const [day, month, year] = dateString.split('-')

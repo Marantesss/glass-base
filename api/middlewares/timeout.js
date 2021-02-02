@@ -1,13 +1,13 @@
-const config = require('../config.js').express;
+const config = require('../config.js').express
 
 const timeout = (req, res, next) => {
   res.setTimeout(config.timeout, () => {
-    const err = new Error('Gateway timeout');
-    err.status = 504;
-    next(err);
-  });
+    const err = new Error('Gateway timeout')
+    err.status = 504
+    next(err)
+  })
 
-  next();
-};
+  next()
+}
 
-module.exports = timeout;
+module.exports = timeout

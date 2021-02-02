@@ -1,22 +1,23 @@
-const axios = require('axios')
-const { seeder } = require('./../config');
+const { seeder } = require('../config')
 
 /* Database */
 // start connection
 require('../knex')
 // models
-const { contract, entity } = require('./../models')
+// TODO
+// eslint-disable-next-line import/no-unresolved
+const { contract, entity } = require('../models')
 
 /* seeders */
 const {
   fetchGeneralContracts,
   fetchSpecificContract,
-  cleanContract
+  cleanContract,
 } = require('./contract')
 const { fetchSpecificEntity } = require('./entity')
 
 const numberOfContracts = 100 || seeder.numberOfContracts
-const step = seeder.step
+const { step } = seeder
 
 const getContracts = async () => {
   // clean up collection
@@ -25,10 +26,13 @@ const getContracts = async () => {
 
   for (let index = 0; index < numberOfContracts; index += step) {
     // fetch 'step' contracts
-    const contracts = await fetchGeneralContracts(index);
+    // eslint-disable-next-line no-await-in-loop
+    const contracts = await fetchGeneralContracts(index)
     // fetch specific information for all contracts
     const cleanContracts = []
+    // eslint-disable-next-line no-restricted-syntax
     for (const id of contracts) {
+      // eslint-disable-next-line no-await-in-loop
       const contractData = await fetchSpecificContract(id)
       // clean contract
       cleanContract(contractData)
@@ -36,6 +40,7 @@ const getContracts = async () => {
     }
     console.log(`Fetched contracts from ${index} to ${index + step}`)
     // bulk save contracts
+    // eslint-disable-next-line no-await-in-loop
     await contract.insertMany(cleanContracts)
     console.log(`Saved contracts from ${index} to ${index + step}`)
   }
@@ -46,17 +51,15 @@ const getEntities = async () => {
   await entity.deleteMany({})
   console.log('Entity collection cleared')
 
-  const queryPromises = [];
+  const queryPromises = []
   // fetch all unique entity ids for contracted
   queryPromises.push(contract.find()
     .distinct('contracted')
-    .exec()
-  )
+    .exec())
   // fetch all unique entity ids for contracting
   queryPromises.push(contract.find()
     .distinct('contracting')
-    .exec()
-  )
+    .exec())
 
   // wait for queries to finish
   const [contracted, contracting] = await Promise.all(queryPromises)
@@ -64,7 +67,10 @@ const getEntities = async () => {
   // union of the two arrays (no duplicates with set)
   const entities = [...new Set([...contracted, ...contracting])]
   const entityObjects = []
+  // TODO
+  // eslint-disable-next-line no-restricted-syntax
   for (const id of entities) {
+    // eslint-disable-next-line no-await-in-loop
     const entityData = await fetchSpecificEntity(id)
     console.log(entityData)
     // clean contract
@@ -76,19 +82,18 @@ const getEntities = async () => {
 }
 
 const main = async () => {
-  //await getContracts()
+  await getContracts()
   await getEntities()
 
   return 'Success'
 }
 
 main()
-  .then(ret => {
+  .then((ret) => {
     console.log(ret)
     process.exit(0)
   })
-  .catch(err => {
+  .catch((err) => {
     console.log(err)
     process.exit(1)
   })
-

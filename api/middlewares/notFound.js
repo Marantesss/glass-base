@@ -1,5 +1,3 @@
-const notFound = (req, res) => {
-  return res.json({ status: 404 });
-};
+const notFound = (req, res) => res.json({ status: 404 })
 
-module.exports = notFound;
+module.exports = notFound
