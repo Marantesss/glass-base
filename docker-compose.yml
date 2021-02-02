@@ -1,25 +1,28 @@
-version: '3.1'
+version: "3.1"
 
 services:
-  mongo:
-    image: mongo:4.4.3-bionic
+  database:
+    image: postgres:13.1-alpine
     restart: unless-stopped
     volumes:
-      - db-data:/data/db
+      - dbdata:/var/lib/postgresql/data
     ports:
-      - 27017:27017
+      - ${DB_PORT}:${DB_PORT}
     environment:
-      MONGO_INITDB_ROOT_USERNAME: ${DB_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
 
-  mongo-express:
-    image: mongo-express:0.54
+  pgAdmin:
+    image: dpage/pgadmin4:4.27
     restart: unless-stopped
     ports:
-      - 8081:8081
+      - ${PGADMIN_PORT}:80
     environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: ${DB_USERNAME}
-      ME_CONFIG_MONGODB_ADMINPASSWORD: ${DB_PASSWORD}
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    depends_on:
+      - database
 
   api:
     image: glass-base/api
@@ -27,13 +30,13 @@ services:
     build:
       context: ./api/
       dockerfile: Dockerfile
-    ports: 
-      - 8000:8000
     volumes:
       - ./api/:/app
       - /app/node_modules
+    ports:
+      - ${APP_BACKEND_DEV_PORT}:${APP_BACKEND_DEV_PORT}
     environment:
-      PORT: ${PORT}
+      PORT: ${APP_BACKEND_DEV_PORT}
       DB_CLIENT: ${DB_CLIENT}
       DB_HOST: ${DB_HOST}
       DB_DATABASE: ${DB_DATABASE}
@@ -41,7 +44,7 @@ services:
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
     depends_on:
-      - mongo
+      - database
 
 volumes:
-  db-data:
+  dbdata:
