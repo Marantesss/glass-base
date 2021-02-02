@@ -5,7 +5,7 @@ const { seeder } = require('./../config');
 // start connection
 require('./../mongoose')
 // models
-const { contract } = require('./../models')
+const { contract, entity } = require('./../models')
 
 /* seeders */
 const {
@@ -13,14 +13,15 @@ const {
   fetchSpecificContract,
   cleanContract
 } = require('./contract')
+const { fetchSpecificEntity } = require('./entity')
 
 const numberOfContracts = 100 || seeder.numberOfContracts
 const step = seeder.step
 
-const main = async () => {
+const getContracts = async () => {
   // clean up collection
   await contract.deleteMany({})
-  console.log('Contracts collection cleared')
+  console.log('Contract collection cleared')
 
   for (let index = 0; index < numberOfContracts; index += step) {
     // fetch 'step' contracts
@@ -38,6 +39,45 @@ const main = async () => {
     await contract.insertMany(cleanContracts)
     console.log(`Saved contracts from ${index} to ${index + step}`)
   }
+}
+
+const getEntities = async () => {
+  // clean up collection
+  await entity.deleteMany({})
+  console.log('Entity collection cleared')
+
+  const queryPromises = [];
+  // fetch all unique entity ids for contracted
+  queryPromises.push(contract.find()
+    .distinct('contracted')
+    .exec()
+  )
+  // fetch all unique entity ids for contracting
+  queryPromises.push(contract.find()
+    .distinct('contracting')
+    .exec()
+  )
+
+  // wait for queries to finish
+  const [contracted, contracting] = await Promise.all(queryPromises)
+
+  // union of the two arrays (no duplicates with set)
+  const entities = [...new Set([...contracted, ...contracting])]
+  const entityObjects = []
+  for (const id of entities) {
+    const entityData = await fetchSpecificEntity(id)
+    console.log(entityData)
+    // clean contract
+    entityObjects.push(entityData)
+  }
+  // save do collection
+  await entity.insertMany(entityObjects)
+  console.log(entities)
+}
+
+const main = async () => {
+  //await getContracts()
+  await getEntities()
 
   return 'Success'
 }

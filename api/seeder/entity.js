@@ -26,4 +26,6 @@ const fetchSpecificEntity = async (id) => {
   }
 }
 
-module.exports = fetchSpecificEntity
+module.exports = { 
+  fetchSpecificEntity
+}
