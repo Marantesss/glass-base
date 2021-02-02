@@ -1,8 +1,6 @@
 const { seeder } = require('../config')
+// const knex = require('../knex')
 
-/* Database */
-// start connection
-require('../knex')
 // models
 // TODO
 // eslint-disable-next-line import/no-unresolved
