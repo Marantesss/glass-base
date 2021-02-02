@@ -10,7 +10,7 @@ const indexRouter = require('./routes');
 const app = express();
 
 /* Database*/
-require('./mongoose')
+app.knex = require('./knex.js');
 
 /* Middlewares */
 app.use(cors({ maxAge: config.maxAge }));

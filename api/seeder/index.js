@@ -3,7 +3,7 @@ const { seeder } = require('./../config');
 
 /* Database */
 // start connection
-require('./../mongoose')
+require('../knex')
 // models
 const { contract, entity } = require('./../models')
 

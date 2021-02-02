@@ -14,14 +14,10 @@ config.express = {
 config.database = {
   client: process.env.DB_CLIENT,
   host: process.env.DB_HOST,
+  database: process.env.DB_DATABASE,
+  user: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
   port: process.env.DB_PORT,
-  options: {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    user: process.env.DB_USERNAME,
-    pass: process.env.DB_PASSWORD,
-    dbName: process.env.DB_DATABASE
-  },
 };
 
 config.seeder = {

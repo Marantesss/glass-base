@@ -1,12 +1,16 @@
 {
-  "name": "base.gov",
+  "name": "glass-base",
   "version": "1.0.0",
   "main": "index.js",
   "description": "REST API for Glass Base Project",
   "license": "MIT",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js",
+    "dev": "nodemon ./index.js",
+    "lint": "echo 'Running backend linter'",
+    "test": "echo 'Running backend tests'",
+    "knex": "knex",
+    "migrate": "knex migrate:latest",
     "seed": "node seeder/index.js"
   },
   "dependencies": {
@@ -16,7 +20,8 @@
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "helmet": "^4.4.1",
-    "mongoose": "^5.11.14"
+    "knex": "^0.21.17",
+    "pg": "^8.5.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"
