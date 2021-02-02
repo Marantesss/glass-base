@@ -1,0 +1,47 @@
+version: '3.1'
+
+services:
+  mongo:
+    image: mongo:4.4.3-bionic
+    restart: unless-stopped
+    volumes:
+      - db-data:/data/db
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
+
+  mongo-express:
+    image: mongo-express:0.54
+    restart: unless-stopped
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${DB_USERNAME}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${DB_PASSWORD}
+
+  api:
+    image: glass-base/api
+    restart: unless-stopped
+    build:
+      context: ./api/
+      dockerfile: Dockerfile
+    ports: 
+      - 8000:8000
+    volumes:
+      - ./api/:/app
+      - /app/node_modules
+    environment:
+      PORT: ${PORT}
+      DB_CLIENT: ${DB_CLIENT}
+      DB_HOST: ${DB_HOST}
+      DB_DATABASE: ${DB_DATABASE}
+      DB_PORT: ${DB_PORT}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+    depends_on:
+      - mongo
+
+volumes:
+  db-data:
