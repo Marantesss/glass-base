@@ -1,4 +1,4 @@
-const contractModel = require('./../models/contract')
+const { contract } = require('./../models')
 
 const contractController = {}
 
