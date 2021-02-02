@@ -18,9 +18,9 @@ config.database = {
   options: {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    pass: process.env.DB_PASSWORD,
     user: process.env.DB_USERNAME,
-    dbName:process.env.DB_DATABASE,
+    pass: process.env.DB_PASSWORD,
+    dbName: process.env.DB_DATABASE
   },
 };
 
