@@ -52,33 +52,33 @@ const getContracts = async () => {
     // get all 'new' entities (non duplicates)
     const uniqueEntityIds = new Set()
     const uniqueEntities = [...cleanContracted, ...cleanContracting].filter((entity) => {
-      const duplicate = uniqueEntityIds.has(entity.id)
-      uniqueEntityIds.add(entity.id)
+      const duplicate = uniqueEntityIds.has(entity.nif)
+      uniqueEntityIds.add(entity.nif)
       return !duplicate
     })
     // fetch any duplicate entities on db
     const duplicateEntitiesIds = await knex('entity')
-      .whereIn('id', [...uniqueEntityIds])
-      .pluck('id')
+      .whereIn('nif', [...uniqueEntityIds])
+      .pluck('nif')
     // remove duplicate keys
     const cleanEntities = uniqueEntities.filter(
-      (entity) => !duplicateEntitiesIds.includes(entity.id),
+      (entity) => !duplicateEntitiesIds.includes(entity.nif),
     )
     // save entities
-    await Promise.all(cleanEntities.map(async ({ contractId, ...restOfEntity }) => {
+    await Promise.all(cleanEntities.map(async ({ contractId, id, ...restOfEntity }) => {
       await knex('entity').insert(restOfEntity)
     }))
     console.log(`Saved ${cleanEntities.length} new entities!`)
 
     // save contracted entities
-    await Promise.all(cleanContracted.map(async ({ contractId, id: entityId }) => {
-      await knex('entityIsContracted').insert({ contractId, entityId })
+    await Promise.all(cleanContracted.map(async ({ contractId, nif: entityNif }) => {
+      await knex('entityIsContracted').insert({ contractId, entityNif })
     }))
     console.log(`Saved ${cleanContracted.length} new entities contracted!`)
 
     // save contracting entities
-    await Promise.all(cleanContracting.map(async ({ contractId, id: entityId }) => {
-      await knex('entityContracts').insert({ contractId, entityId })
+    await Promise.all(cleanContracting.map(async ({ contractId, nif: entityNif }) => {
+      await knex('entityContracts').insert({ contractId, entityNif })
     }))
     console.log(`Saved ${cleanContracting.length} new entities contracts!`)
   }
@@ -132,7 +132,7 @@ const getEntities = async () => {
 */
 
 const main = async () => {
-  // await cleanDatabase()
+  await cleanDatabase()
   await getContracts()
 
   return 'Success'

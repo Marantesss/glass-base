@@ -1,8 +1,8 @@
 exports.up = (knex) => knex.schema.createTable('entityContracts', (table) => {
-  table.integer('entityId').unsigned().references('id').inTable('entity')
+  table.string('entityNif').unsigned().references('nif').inTable('entity')
   table.integer('contractId').unsigned().references('id').inTable('contract')
   // composite primary key
-  table.primary(['entityId', 'contractId'])
+  table.primary(['entityNif', 'contractId'])
 })
 
 exports.down = (knex) => knex.schema
