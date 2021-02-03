@@ -8,11 +8,9 @@ const {
   cleanContract,
 } = require('./contract')
 
-const numberOfContracts = 1025000 || seeder.numberOfContracts
-const startRange = 1005000
-const { step } = seeder
+const { numberOfContracts, step } = seeder
 
-const getContracts = async () => {
+const seedContracts = async (startRange = 0) => {
   for (let index = startRange; index < numberOfContracts; index += step) {
     // fetch 'step' contracts
     const contracts = await fetchGeneralContracts(index)
@@ -32,7 +30,6 @@ const getContracts = async () => {
       const {
         contracted, contracting, documents, ...restOfContract
       } = cleanContract(contractData)
-      console.log(contractData)
       // store stuff in array
       cleanContracted.push(...contracted)
       cleanContracting.push(...contracting)
@@ -137,8 +134,11 @@ const getEntities = async () => {
 */
 
 const main = async () => {
-  await cleanDatabase()
-  await getContracts()
+  const startRange = await getContractCount()
+  if (!startRange) {
+    await cleanDatabase()
+  }
+  await seedContracts(startRange)
 
   return 'Success'
 }

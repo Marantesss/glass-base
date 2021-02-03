@@ -2,7 +2,7 @@ const axios = require('axios')
 const { seeder } = require('../config')
 
 /* Utils */
-const { formatDateFromString, formatCurrencyFromString } = require('./utils')
+const { formatDateFromString, formatCurrencyFromString, formatTitleCase } = require('./utils')
 
 const { step } = seeder
 const baseUrl = `${seeder.url}/contratos`
@@ -90,11 +90,19 @@ const cleanContract = (contractData) => ({
   // contracted and contracting reference
   contracted: contractData.contracted.map(
     // add contract id to entity object
-    (entity) => ({ ...entity, contractId: contractData.id }),
+    (entity) => ({
+      ...entity,
+      contractId: contractData.id,
+      description: formatTitleCase(entity.description),
+    }),
   ),
   contracting: contractData.contracting.map(
     // add contract id to entity object
-    (entity) => ({ ...entity, contractId: contractData.id }),
+    (entity) => ({
+      ...entity,
+      contractId: contractData.id,
+      description: formatTitleCase(entity.description),
+    }),
   ),
   // - monetary values
   initialContractualPrice: formatCurrencyFromString(contractData.initialContractualPrice),
