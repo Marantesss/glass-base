@@ -13,5 +13,6 @@ module.exports = {
   rules: {
     'no-console': 'off',
     semi: ['error', 'never'],
+    'no-await-in-loop': 'off',
   },
 }
