@@ -1,10 +1,5 @@
 const { seeder } = require('../config')
-// const knex = require('../knex')
-
-// models
-// TODO
-// eslint-disable-next-line import/no-unresolved
-const { contract, entity } = require('../models')
+const knex = require('../knex')
 
 /* seeders */
 const {
@@ -12,38 +7,92 @@ const {
   fetchSpecificContract,
   cleanContract,
 } = require('./contract')
-const { fetchSpecificEntity } = require('./entity')
 
 const numberOfContracts = 100 || seeder.numberOfContracts
 const { step } = seeder
 
 const getContracts = async () => {
-  // clean up collection
-  await contract.deleteMany({})
-  console.log('Contract collection cleared')
-
   for (let index = 0; index < numberOfContracts; index += step) {
     // fetch 'step' contracts
-    // eslint-disable-next-line no-await-in-loop
     const contracts = await fetchGeneralContracts(index)
-    // fetch specific information for all contracts
+
     const cleanContracts = []
+    const cleanDocuments = []
+    const cleanContracted = []
+    const cleanContracting = []
+    // fetch specific information for all contracts
     // eslint-disable-next-line no-restricted-syntax
     for (const id of contracts) {
-      // eslint-disable-next-line no-await-in-loop
       const contractData = await fetchSpecificContract(id)
       // clean contract
-      cleanContract(contractData)
-      cleanContracts.push(contractData)
+      const {
+        contracted, contracting, documents, ...restOfContract
+      } = cleanContract(contractData)
+      // store stuff in array
+      cleanContracted.push(...contracted)
+      cleanContracting.push(...contracting)
+      cleanDocuments.push(...documents)
+      cleanContracts.push(restOfContract)
     }
-    console.log(`Fetched contracts from ${index} to ${index + step}`)
-    // bulk save contracts
-    // eslint-disable-next-line no-await-in-loop
-    await contract.insertMany(cleanContracts)
-    console.log(`Saved contracts from ${index} to ${index + step}`)
+    console.log(`Fetched contracts from ${index} to ${index + step}!`)
+
+    // save contracts
+    await Promise.all(cleanContracts.map(async (contract) => {
+      await knex('contract').insert(contract)
+    }))
+    console.log(`Saved ${cleanContracts.length} new contracts!`)
+
+    // save documents
+    await Promise.all(cleanDocuments.map(async (document) => {
+      await knex('document').insert(document)
+    }))
+    console.log(`Saved ${cleanDocuments.length} new documents!`)
+
+    // get all 'new' entities (non duplicates)
+    const uniqueEntityIds = new Set()
+    const uniqueEntities = [...cleanContracted, ...cleanContracting].filter((entity) => {
+      const duplicate = uniqueEntityIds.has(entity.id)
+      uniqueEntityIds.add(entity.id)
+      return !duplicate
+    })
+    // fetch any duplicate entities on db
+    const duplicateEntitiesIds = await knex('entity')
+      .whereIn('id', [...uniqueEntityIds])
+      .returning('id')
+    // remove duplicate keys
+    const cleanEntities = uniqueEntities.filter(
+      (entity) => !duplicateEntitiesIds.includes(entity.id),
+    )
+    // save entities
+    await Promise.all(cleanEntities.map(async (entity) => {
+      // remove contract id
+      const { contractId, ...restOfEntity } = entity
+      await knex('entity').insert(restOfEntity)
+    }))
+    console.log(`Saved ${cleanEntities.length} new entities!`)
+
+    // save contracted entities
+    await Promise.all(cleanContracted.map(async ({ contractId, id: entityId }) => {
+      await knex('entityIsContracted').insert({ contractId, entityId })
+    }))
+    // save contracting entities
+    await Promise.all(cleanContracting.map(async ({ contractId, id: entityId }) => {
+      await knex('entityContracts').insert({ contractId, entityId })
+    }))
   }
 }
 
+const cleanDatabase = async () => {
+  // database tables
+  const tables = ['entityContracts', 'entityIsContracted', 'document', 'entity', 'contract']
+  // delete all content
+  await Promise.all(tables.map(async (table) => {
+    await knex(table).del()
+    console.log(`Table ${table} content deleted!`)
+  }))
+}
+
+/*
 const getEntities = async () => {
   // clean up collection
   await entity.deleteMany({})
@@ -78,10 +127,11 @@ const getEntities = async () => {
   await entity.insertMany(entityObjects)
   console.log(entities)
 }
+*/
 
 const main = async () => {
+  await cleanDatabase()
   await getContracts()
-  await getEntities()
 
   return 'Success'
 }

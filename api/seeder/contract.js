@@ -2,7 +2,7 @@ const axios = require('axios')
 const { seeder } = require('../config')
 
 /* Utils */
-const { formatDateFromString } = require('./utils')
+const { formatDateFromString, formatCurrencyFromString } = require('./utils')
 
 const { step } = seeder
 const baseUrl = `${seeder.url}/contratos`
@@ -64,29 +64,45 @@ const fetchSpecificContract = async (id) => {
   }
 }
 
-const cleanContract = async (contractData) => {
-  const cleanContractData = contractData
-  // save id to _id
-  // eslint-disable-next-line no-underscore-dangle
-  cleanContractData._id = contractData.id
-  delete cleanContractData.id
+const cleanContract = (contractData) => ({
+  // TODO add new cenas
+  // stuff we want to keep
+  id: contractData.id,
+  cpvs: contractData.cpvs,
+  executionPlace: contractData.executionPlace,
+  description: contractData.description,
+  directAwardFundamentationType: contractData.directAwardFundamentationType,
+  contractingProcedureType: contractData.contractingProcedureType,
+  contractTypes: contractData.contractTypes,
+  endOfContractType: contractData.endOfContractType,
 
+  documents: contractData.documents.map(
+    // add contract id to document object
+    (document) => ({ ...document, contractId: contractData.id }),
+  ),
   // clean up some dates
-  cleanContractData.publicationDate = formatDateFromString(contractData.publicationDate)
-  cleanContractData.signingDate = formatDateFromString(contractData.signingDate)
-  cleanContractData.closeDate = formatDateFromString(contractData.closeDate)
+  publicationDate: formatDateFromString(contractData.publicationDate),
+  signingDate: formatDateFromString(contractData.signingDate),
+  // closeDate: formatDateFromString(contractData.closeDate)
 
   // contracted and contracting reference
-  cleanContractData.contracted = contractData.contracted.map((elem) => elem.id)
-  cleanContractData.contracting = contractData.contracting.map((elem) => elem.id)
+  contracted: contractData.contracted.map(
+    // add contract id to entity object
+    (entity) => ({ ...entity, contractId: contractData.id }),
+  ),
+  contracting: contractData.contracting.map(
+    // add contract id to entity object
+    (entity) => ({ ...entity, contractId: contractData.id }),
+  ),
+  // - monetary values
+  initialContractualPrice: formatCurrencyFromString(contractData.initialContractualPrice),
+  totalEffectivePrice: formatCurrencyFromString(contractData.totalEffectivePrice),
 
   // TODO: there may be some other stuff that need cleaning
-  // - monetary values
-  // - time
+  // - execution deadline "60 dias"
+  executionDeadline: contractData.executionDeadline,
   // - ...
-
-  return cleanContractData
-}
+})
 
 module.exports = {
   fetchGeneralContracts,
