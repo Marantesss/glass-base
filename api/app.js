@@ -1,28 +1,28 @@
-const express = require('express');
-require('express-async-errors');
-const cors = require('cors');
-const helmet = require('helmet');
+const express = require('express')
+require('express-async-errors')
+const cors = require('cors')
+const helmet = require('helmet')
 
-const { express: config } = require('./config');
-const middlewares = require('./middlewares');
-const indexRouter = require('./routes');
+const { express: config } = require('./config')
+const middlewares = require('./middlewares')
+const indexRouter = require('./routes')
 
-const app = express();
+const app = express()
 
-/* Database*/
-require('./mongoose')
+/* Database */
+app.knex = require('./knex.js')
 
 /* Middlewares */
-app.use(cors({ maxAge: config.maxAge }));
-app.use(helmet());
-app.use(express.json());
-app.use(middlewares.timeout);
+app.use(cors({ maxAge: config.maxAge }))
+app.use(helmet())
+app.use(express.json())
+app.use(middlewares.timeout)
 
 /* Routers */
-app.use('/', indexRouter);
-app.use(middlewares.notFound);
+app.use('/', indexRouter)
+app.use(middlewares.notFound)
 
 /* Handlers */
-app.use(middlewares.error);
+app.use(middlewares.error)
 
-module.exports = app;
+module.exports = app
