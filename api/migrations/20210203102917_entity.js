@@ -4,7 +4,8 @@ exports.up = (knex) => knex.schema.createTable('entity', (table) => {
   // nif with different id's... blame base.gov
   table.string('nif').notNullable().primary() // .unique()
   table.text('description').notNullable()
-  table.text('location')
+
+  table.timestamp('createdAt', { useTz: true }).defaultTo(knex.fn.now())
 })
 
 exports.down = (knex) => knex.schema

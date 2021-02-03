@@ -3,6 +3,8 @@ exports.up = (knex) => knex.schema.createTable('entityContracts', (table) => {
   table.integer('contractId').unsigned().references('id').inTable('contract')
   // composite primary key
   table.primary(['entityNif', 'contractId'])
+
+  table.timestamp('createdAt', { useTz: true }).defaultTo(knex.fn.now())
 })
 
 exports.down = (knex) => knex.schema

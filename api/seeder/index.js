@@ -72,7 +72,7 @@ const getContracts = async () => {
 
     // save contracted entities
     await Promise.all(cleanContracted.map(async ({ contractId, nif: entityNif }) => {
-      await knex('entityIsContracted').insert({ contractId, entityNif })
+      await knex('entityContractor').insert({ contractId, entityNif })
     }))
     console.log(`Saved ${cleanContracted.length} new entities contracted!`)
 
@@ -84,9 +84,14 @@ const getContracts = async () => {
   }
 }
 
+const getContractCount = async () => {
+  const { count } = await knex('contract').count().first()
+  return parseInt(count, 10) // 10 => decimal
+}
+
 const cleanDatabase = async () => {
   // database tables
-  const tables = ['entityContracts', 'entityIsContracted', 'document', 'entity', 'contract']
+  const tables = ['entityContracts', 'entityContractor', 'document', 'entity', 'contract']
   // delete all content
   await Promise.all(tables.map(async (table) => {
     await knex(table).del()
