@@ -1,8 +1,10 @@
 exports.up = (knex) => knex.schema.createTable('entity', (table) => {
   table.integer('id').unsigned().notNullable().primary()
-  table.string('nif').notNullable().unique()
-  table.string('description').notNullable()
-  table.string('location')
+  // nif should be unique but some entities have the same
+  // nif with different id's... blame base.gov
+  table.string('nif').notNullable()// .unique()
+  table.text('description').notNullable()
+  table.text('location')
 })
 
 exports.down = (knex) => knex.schema

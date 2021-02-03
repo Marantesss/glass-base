@@ -1,3 +1,7 @@
+// https://www.postgresql.org/docs/9.1/datatype-character.html
+// on string vs text
+// "There is no performance difference among these
+// three types, apart from increased storage space..."
 exports.up = (knex) => knex.schema.createTable('contract', (table) => {
   // IMPORTANT STUFF
   table.integer('id').unsigned().notNullable().primary()
@@ -5,14 +9,15 @@ exports.up = (knex) => knex.schema.createTable('contract', (table) => {
   table.float('totalEffectivePrice', 2) // precision = 2
   table.date('publicationDate').notNullable()
   table.date('signingDate')
-  table.string('cpvs')
-  table.string('directAwardFundamentationType')
-  table.string('contractTypes')
-  table.string('contractingProcedureType')
-  table.string('executionPlace')
+  table.text('cpvs')
+  table.text('directAwardFundamentationType')
+  table.text('contractFundamentationType')
+  table.text('contractTypes')
+  table.text('contractingProcedureType')
+  table.text('executionPlace')
   table.text('description')
-  table.string('endOfContractType')
-  table.string('executionDeadline')
+  table.text('endOfContractType')
+  table.text('executionDeadline')
   // create created at column
   table.timestamp('createdAt', { useTz: true }).defaultTo(knex.fn.now())
 

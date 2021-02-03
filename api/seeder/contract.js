@@ -76,6 +76,7 @@ const cleanContract = (contractData) => ({
   contractingProcedureType: contractData.contractingProcedureType,
   contractTypes: contractData.contractTypes,
   endOfContractType: contractData.endOfContractType,
+  contractFundamentationType: contractData.contractFundamentationType,
 
   documents: contractData.documents.map(
     // add contract id to document object

@@ -8,11 +8,12 @@ const {
   cleanContract,
 } = require('./contract')
 
-const numberOfContracts = 1000 || seeder.numberOfContracts
+const numberOfContracts = 1025000 || seeder.numberOfContracts
+const startRange = 1005000
 const { step } = seeder
 
 const getContracts = async () => {
-  for (let index = 0; index < numberOfContracts; index += step) {
+  for (let index = startRange; index < numberOfContracts; index += step) {
     // fetch 'step' contracts
     const contracts = await fetchGeneralContracts(index)
 
@@ -31,6 +32,7 @@ const getContracts = async () => {
       const {
         contracted, contracting, documents, ...restOfContract
       } = cleanContract(contractData)
+      console.log(contractData)
       // store stuff in array
       cleanContracted.push(...contracted)
       cleanContracting.push(...contracting)
@@ -40,15 +42,11 @@ const getContracts = async () => {
     console.log(`Fetched contracts from ${index} to ${index + step}!`)
 
     // save contracts
-    await Promise.all(cleanContracts.map(async (contract) => {
-      await knex('contract').insert(contract)
-    }))
+    await knex('contract').insert(cleanContracts)
     console.log(`Saved ${cleanContracts.length} new contracts!`)
 
     // save documents
-    await Promise.all(cleanDocuments.map(async (document) => {
-      await knex('document').insert(document)
-    }))
+    await knex('document').insert(cleanDocuments)
     console.log(`Saved ${cleanDocuments.length} new documents!`)
 
     // get all 'new' entities (non duplicates)
@@ -61,15 +59,13 @@ const getContracts = async () => {
     // fetch any duplicate entities on db
     const duplicateEntitiesIds = await knex('entity')
       .whereIn('id', [...uniqueEntityIds])
-      .returning('id')
+      .pluck('id')
     // remove duplicate keys
     const cleanEntities = uniqueEntities.filter(
       (entity) => !duplicateEntitiesIds.includes(entity.id),
     )
     // save entities
-    await Promise.all(cleanEntities.map(async (entity) => {
-      // remove contract id
-      const { contractId, ...restOfEntity } = entity
+    await Promise.all(cleanEntities.map(async ({ contractId, ...restOfEntity }) => {
       await knex('entity').insert(restOfEntity)
     }))
     console.log(`Saved ${cleanEntities.length} new entities!`)
@@ -136,7 +132,7 @@ const getEntities = async () => {
 */
 
 const main = async () => {
-  await cleanDatabase()
+  // await cleanDatabase()
   await getContracts()
 
   return 'Success'
