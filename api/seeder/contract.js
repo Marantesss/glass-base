@@ -32,7 +32,8 @@ const fetchGeneralContracts = async (startRange) => {
     console.log(`${startRange + step - 1} => pub: ${publicationDate}, id: ${id}`)
 
     // we only need an array of id's
-    return data.map((contract) => contract.id)
+    // return data.map((contract) => contract.id)
+    return data
   } catch (err) {
     // network error
     // console.error(err)

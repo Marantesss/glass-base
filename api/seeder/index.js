@@ -8,7 +8,7 @@ const {
   cleanContract,
 } = require('./contract')
 
-const numberOfContracts = 100 || seeder.numberOfContracts
+const numberOfContracts = 1000 || seeder.numberOfContracts
 const { step } = seeder
 
 const getContracts = async () => {
@@ -21,9 +21,12 @@ const getContracts = async () => {
     const cleanContracted = []
     const cleanContracting = []
     // fetch specific information for all contracts
+    // IMPORTANT: We could have done this asynchronously but
+    // the base.gov.pt api does not handle multiple requests well
     // eslint-disable-next-line no-restricted-syntax
-    for (const id of contracts) {
+    for (const { id } of contracts) {
       const contractData = await fetchSpecificContract(id)
+      console.log(`Fetched contract ${id}!`)
       // clean contract
       const {
         contracted, contracting, documents, ...restOfContract
@@ -75,10 +78,13 @@ const getContracts = async () => {
     await Promise.all(cleanContracted.map(async ({ contractId, id: entityId }) => {
       await knex('entityIsContracted').insert({ contractId, entityId })
     }))
+    console.log(`Saved ${cleanContracted.length} new entities contracted!`)
+
     // save contracting entities
     await Promise.all(cleanContracting.map(async ({ contractId, id: entityId }) => {
       await knex('entityContracts').insert({ contractId, entityId })
     }))
+    console.log(`Saved ${cleanContracting.length} new entities contracts!`)
   }
 }
 
