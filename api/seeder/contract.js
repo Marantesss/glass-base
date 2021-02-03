@@ -16,6 +16,7 @@ const fetchGeneralContracts = async (startRange) => {
       Range: `${startRange}-${startRange + step - 1}`,
     },
     url: baseUrl,
+    timeout: 1000,
   }
 
   try {
@@ -24,12 +25,12 @@ const fetchGeneralContracts = async (startRange) => {
 
     // watch out for server errors
     if (status !== 200) {
-      throw new Error(`${baseUrl} returned with status != 200`)
+      console.warn(`${baseUrl} returned with status != 200`)
+      // try again
+      console.log('Trying again for contract')
+      // TODO: this causes an infinite loop, maybe do something else about this
+      return await fetchGeneralContracts(startRange)
     }
-
-    // log some information
-    const { id, publicationDate } = data[data.length - 1]
-    console.log(`${startRange + step - 1} => pub: ${publicationDate}, id: ${id}`)
 
     // we only need an array of id's
     // return data.map((contract) => contract.id)
@@ -37,7 +38,12 @@ const fetchGeneralContracts = async (startRange) => {
   } catch (err) {
     // network error
     // console.error(err)
-    throw new Error(`${baseUrl} returned with status != 200`)
+    // throw new Error(`${baseUrl} returned with NETWORK ERROR EXCEPTION`)
+    console.warn(`${baseUrl} returned with NETWORK ERROR EXCEPTION`)
+    console.log(`Trying again for contracts starting in ${startRange}`)
+    // TODO: this causes an infinite loop, maybe do something else about this
+    // eslint-disable-next-line no-return-await
+    return await fetchGeneralContracts(startRange)
   }
 }
 
@@ -46,6 +52,7 @@ const fetchSpecificContract = async (id) => {
   const options = {
     method: 'GET',
     url: url(id),
+    timeout: 1000,
   }
 
   try {
@@ -54,14 +61,23 @@ const fetchSpecificContract = async (id) => {
 
     // watch out for server errors
     if (status !== 200) {
-      throw new Error(`${url(id)} returned with status != 200`)
+      console.warn(`${url(id)} returned with status != 200`)
+      // try again
+      console.log(`trying again for contract ${id}`)
+      // TODO: this causes an infinite loop, maybe do something else about this
+      return await fetchSpecificContract(id)
     }
 
     return data
   } catch (err) {
     // network error
     // console.error(err)
-    throw new Error(`${url(id)} returned with status != 200`)
+    // throw new Error(`${url(id)} returned with NETWORK ERROR EXCEPTION`)
+    console.warn(`${url(id)} returned with NETWORK ERROR EXCEPTION`)
+    console.log(`Trying again for contract ${id}`)
+    // TODO: this causes an infinite loop, maybe do something else about this
+    // eslint-disable-next-line no-return-await
+    return await fetchSpecificContract(id)
   }
 }
 
