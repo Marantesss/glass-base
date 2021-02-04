@@ -38,6 +38,7 @@ const entitiesContractedToCSV = async (contracts, filename = 'entitiesContracted
   const contractIds = contracts.map((contract) => contract.id)
   // fetch all entities contracted in these contracts
   const entities = await knex('entityContracted')
+    .select('entityContracted.contractId', 'entity.nif', 'entity.description', 'entity.createdAt')
     .whereIn('contractId', contractIds)
     .join('entity', 'entityContracted.entityNif', 'entity.nif')
 
@@ -57,6 +58,7 @@ const entitiesContractorToCSV = async (contracts, filename = 'entitiesContractor
   const contractIds = contracts.map((contract) => contract.id)
   // fetch all entities contracted in these contracts
   const entities = await knex('entityContractor')
+    .select('entityContractor.contractId', 'entity.nif', 'entity.description', 'entity.createdAt')
     .whereIn('contractId', contractIds)
     .join('entity', 'entityContractor.entityNif', 'entity.nif')
 
