@@ -8,8 +8,10 @@ const objectArrayToCSV = (arr) => {
   const columnValues = arr.map((row) => Object.values(row))
   // concat with contract objects
   const csvArray = [...[columnNames], ...columnValues]
-  // join everything with ',' and '\n'
-  const csvString = csvArray.map((row) => row.join(',')).join('\n')
+  // join everything with '""', ',' and '\n'
+  const csvString = csvArray.map((row) => (
+    row.map((elem) => (elem ? `"${elem}"` : '""'))
+  ).join(',')).join('\n')
 
   return csvString
 }
