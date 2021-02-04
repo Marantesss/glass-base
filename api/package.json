@@ -11,7 +11,8 @@
     "test": "echo 'Running backend tests'",
     "knex": "knex",
     "migrate": "knex migrate:latest",
-    "seed": "node seeder/index.js"
+    "seed": "node seeder/index.js",
+    "export": "node exporter/index.js"
   },
   "dependencies": {
     "axios": "^0.21.1",
