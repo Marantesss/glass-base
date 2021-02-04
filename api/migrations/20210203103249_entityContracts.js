@@ -7,5 +7,4 @@ exports.up = (knex) => knex.schema.createTable('entityContracts', (table) => {
   table.timestamp('createdAt', { useTz: true }).defaultTo(knex.fn.now())
 })
 
-exports.down = (knex) => knex.schema
-  .dropTable('entityContracts')
+exports.down = (knex) => knex.schema.dropTable('entityContracts')
