@@ -16,12 +16,24 @@ const fetchGeneralContracts = async (startRange) => {
       Range: `${startRange}-${startRange + step - 1}`,
     },
     url: baseUrl,
-    timeout: 1000,
   }
+  // axios request timeout
+  const cancelTokenTimeout = 1000
 
   try {
+    // Sometimes the 'timeout' option seems to not work as expected
+    // https://github.com/axios/axios/issues/647
+    // maybe use cancel token... Because it looks like the timeout
+    // in axios is response timeout, not connection timeout
+    const abort = axios.CancelToken.source()
+
+    const timeout = setTimeout(() => {
+      abort.cancel(`Timeout of ${cancelTokenTimeout}ms.`)
+    }, cancelTokenTimeout)
+
     // fetch 'step' contracts
-    const { status, data } = await axios(options)
+    const { status, data } = await axios({ ...options, cancelToken: abort.token })
+    clearTimeout(timeout)
 
     // watch out for server errors
     if (status !== 200) {
@@ -52,12 +64,24 @@ const fetchSpecificContract = async (id) => {
   const options = {
     method: 'GET',
     url: url(id),
-    timeout: 1000,
   }
+  // axios request timeout
+  const cancelTokenTimeout = 1000
 
   try {
+    // Sometimes the 'timeout' option seems to not work as expected
+    // https://github.com/axios/axios/issues/647
+    // maybe use cancel token... Because it looks like the timeout
+    // in axios is response timeout, not connection timeout
+    const abort = axios.CancelToken.source()
+
+    const timeout = setTimeout(() => {
+      abort.cancel(`Timeout of ${cancelTokenTimeout}ms.`)
+    }, cancelTokenTimeout)
+
     // fetch 'step' contracts
-    const { status, data } = await axios(options)
+    const { status, data } = await axios({ ...options, cancelToken: abort.token })
+    clearTimeout(timeout)
 
     // watch out for server errors
     if (status !== 200) {
