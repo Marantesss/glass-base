@@ -18,7 +18,7 @@ const seedContracts = async (startRange = 0) => {
     const cleanContracts = []
     const cleanDocuments = []
     const cleanContracted = []
-    const cleanContracting = []
+    const cleanContractor = []
     // fetch specific information for all contracts
     // IMPORTANT: We could have done this asynchronously but
     // the base.gov.pt api does not handle multiple requests well
@@ -32,7 +32,7 @@ const seedContracts = async (startRange = 0) => {
       } = cleanContract(contractData)
       // store stuff in array
       cleanContracted.push(...contracted)
-      cleanContracting.push(...contracting)
+      cleanContractor.push(...contracting)
       cleanDocuments.push(...documents)
       cleanContracts.push(restOfContract)
     }
@@ -48,7 +48,7 @@ const seedContracts = async (startRange = 0) => {
 
     // get all 'new' entities (non duplicates)
     const uniqueEntityIds = new Set()
-    const uniqueEntities = [...cleanContracted, ...cleanContracting].filter((entity) => {
+    const uniqueEntities = [...cleanContracted, ...cleanContractor].filter((entity) => {
       const duplicate = uniqueEntityIds.has(entity.nif)
       uniqueEntityIds.add(entity.nif)
       return !duplicate
@@ -69,15 +69,15 @@ const seedContracts = async (startRange = 0) => {
 
     // save contracted entities
     await Promise.all(cleanContracted.map(async ({ contractId, nif: entityNif }) => {
-      await knex('entityContractor').insert({ contractId, entityNif })
+      await knex('entityContracted').insert({ contractId, entityNif })
     }))
     console.log(`Saved ${cleanContracted.length} new entities contracted!`)
 
-    // save contracting entities
-    await Promise.all(cleanContracting.map(async ({ contractId, nif: entityNif }) => {
-      await knex('entityContracts').insert({ contractId, entityNif })
+    // save contractor entities
+    await Promise.all(cleanContractor.map(async ({ contractId, nif: entityNif }) => {
+      await knex('entityContractor').insert({ contractId, entityNif })
     }))
-    console.log(`Saved ${cleanContracting.length} new entities contracts!`)
+    console.log(`Saved ${cleanContractor.length} new entities contractor!`)
   }
 }
 
@@ -88,7 +88,7 @@ const getContractCount = async () => {
 
 const cleanDatabase = async () => {
   // database tables
-  const tables = ['entityContracts', 'entityContractor', 'document', 'entity', 'contract']
+  const tables = ['entityContracted', 'entityContractor', 'document', 'entity', 'contract']
   // delete all content
   await Promise.all(tables.map(async (table) => {
     await knex(table).del()
