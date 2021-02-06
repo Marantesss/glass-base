@@ -4,7 +4,7 @@ const { seeder } = require('../config')
 /* Utils */
 const { formatDateFromString, formatCurrencyFromString, formatTitleCase } = require('./utils')
 
-const { step } = seeder
+const { step, timeout: cancelTokenTimeout } = seeder
 const baseUrl = `${seeder.url}/contratos`
 const url = (id) => `${baseUrl}/${id}`
 
@@ -17,9 +17,6 @@ const fetchGeneralContracts = async (startRange) => {
     },
     url: baseUrl,
   }
-  // axios request timeout
-  const cancelTokenTimeout = 1000
-
   try {
     // Sometimes the 'timeout' option seems to not work as expected
     // https://github.com/axios/axios/issues/647
@@ -65,8 +62,6 @@ const fetchSpecificContract = async (id) => {
     method: 'GET',
     url: url(id),
   }
-  // axios request timeout
-  const cancelTokenTimeout = 1000
 
   try {
     // Sometimes the 'timeout' option seems to not work as expected

@@ -23,6 +23,7 @@ config.seeder = {
   numberOfContracts: 1265000,
   step: 100,
   url: 'http://www.base.gov.pt/base2/rest',
+  timeout: 2000, // TODO: change this timeout based on failed/successful requests
 }
 
 module.exports = config
