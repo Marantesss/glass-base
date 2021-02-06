@@ -34,9 +34,9 @@ services:
       - ./api/:/app
       - /app/node_modules
     ports:
-      - ${APP_BACKEND_DEV_PORT}:${APP_BACKEND_DEV_PORT}
+      - ${APP_BACKEND_PORT}:${APP_BACKEND_PORT}
     environment:
-      PORT: ${APP_BACKEND_DEV_PORT}
+      PORT: ${APP_BACKEND_PORT}
       DB_CLIENT: ${DB_CLIENT}
       DB_HOST: ${DB_HOST}
       DB_DATABASE: ${DB_DATABASE}
@@ -45,6 +45,23 @@ services:
       DB_PASSWORD: ${DB_PASSWORD}
     depends_on:
       - database
+
+  glass-base-app:
+    image: glass-base/glass-base-app
+    restart: unless-stopped
+    build:
+      context: ./glass-base-app/
+      dockerfile: Dockerfile
+    volumes:
+      - ./glass-base-app/:/app
+      - /app/node_modules
+    ports:
+      - ${APP_FRONTEND_PORT}:${APP_FRONTEND_PORT}
+    environment:
+      NUXT_ENV_PORT: ${APP_FRONTEND_PORT}
+      NUXT_ENV_DOMAIN: ${APP_FRONTEND_DOMAIN}
+      NUXT_ENV_API_PORT: ${APP_BACKEND_PORT}
+      NUXT_ENV_API_DOMAIN: ${APP_BACKEND_DOMAIN}
 
 volumes:
   dbdata:
