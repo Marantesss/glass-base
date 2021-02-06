@@ -1,6 +1,6 @@
 ---
 name: "🐛 Bug report"
-about: Report an issue with Calculadora Fiscal
+about: Report an issue with Glass Base App
 title: ''
 labels: bug
 assignees: ''
