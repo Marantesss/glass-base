@@ -10,12 +10,17 @@
     </div>
     <!-- ROUTES -->
     <div class="grid grid-col-1 gap-2">
-      <button v-for="route in routes" :key="route.name" class="button">
-        <Icon :icon="route.icon" />
-        <span class="pl-3">
-          {{ route.name }}
-        </span>
-      </button>
+      <NuxtLink v-for="route in routes" :key="route.name" :to="route.path">
+        <button
+          class="button"
+          :class="$nuxt.$route.path === route.path ? 'button-active' : ''"
+        >
+          <Icon :icon="route.icon" />
+          <span class="pl-3">
+            {{ route.name }}
+          </span>
+        </button>
+      </NuxtLink>
     </div>
     <!-- TIME -->
     <div class="grid grid-col-1 gap-2 text-gray-dark">
@@ -56,7 +61,7 @@
     <div>
       <span class="line-separator"></span>
       <button
-        class="w-full flex items-center justify-center py-4 rounded-lg bg-white text-dark outline-none"
+        class="w-full flex items-center justify-center py-4 rounded-lg bg-white text-dark mb-4 mt-6 outline-none"
       >
         <Icon icon="Coffee" size="large" />
         <span class="pl-2 uppercase"> Buy me a coffee </span>
@@ -115,7 +120,7 @@ export default {
 }
 
 .logo {
-  @apply flex justify-between items-center;
+  @apply flex justify-center items-center;
 }
 
 .line-separator {
@@ -136,5 +141,10 @@ export default {
 
 .button-active {
   @apply bg-white bg-opacity-25;
+}
+
+.button-active:hover {
+  @apply bg-white;
+  --bg-opacity: 35%;
 }
 </style>
