@@ -1,10 +1,6 @@
 <template>
-  <div class="container text-dark">
-    <div>
-      <Logo />
-      <p>TESTE DE FONT</p>
-      <h1>glass-base-app</h1>
-    </div>
+  <div class="flex justify-center">
+    <p>TESTE DE FONT</p>
   </div>
 </template>
 
@@ -13,8 +9,9 @@ export default {}
 </script>
 
 <style>
-/* Sample `apply` at-rules with Tailwind CSS */
+/* Sample `apply` at-rules with Tailwind CSS
 .container {
   @apply min-h-screen flex justify-center items-center text-center mx-auto;
 }
+*/
 </style>

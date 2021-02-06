@@ -18,12 +18,21 @@ module.exports = {
         'glass-purple-light-5': '#ECEEF9',
         // blue
         'glass-blue': '#00509D',
-      },
-      textColor: {
+        // dark gray/black
         dark: '#0A0A16', // black
         light: '#E5E5E5', // white
         'gray-light': '#A6B0C4', // light grey
         'gray-dark': '#585D6D', // dark grey
+      },
+      height: {
+        72: '18rem',
+        84: '21rem',
+        96: '24rem',
+      },
+      width: {
+        72: '18rem',
+        84: '21rem',
+        96: '24rem',
       },
     },
   },
