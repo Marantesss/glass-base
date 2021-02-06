@@ -58,6 +58,9 @@ services:
     ports:
       - ${APP_FRONTEND_PORT}:${APP_FRONTEND_PORT}
     environment:
+      # Nuxt needs this variable (HOST) when started from a container,
+      # otherwise you won’t be able to reach it.
+      HOST: 0.0.0.0
       NUXT_ENV_PORT: ${APP_FRONTEND_PORT}
       NUXT_ENV_DOMAIN: ${APP_FRONTEND_DOMAIN}
       NUXT_ENV_API_PORT: ${APP_BACKEND_PORT}
