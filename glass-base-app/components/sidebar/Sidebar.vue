@@ -52,10 +52,10 @@
 </template>
 
 <script>
-import Logo from '~/components/common/Logo'
-import SidebarButton from '~/components/common/sidebar/SidebarButton'
-import CoffeeButton from '~/components/common/sidebar/CoffeeButton'
-import DateInput from '~/components/common/sidebar/DateInput'
+import Logo from '~/components/Logo'
+import SidebarButton from '~/components/sidebar/SidebarButton'
+import CoffeeButton from '~/components/sidebar/CoffeeButton'
+import DateInput from '~/components/sidebar/DateInput'
 
 export default {
   name: 'Sidebar',

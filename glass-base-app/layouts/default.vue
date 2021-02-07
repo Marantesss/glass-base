@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import Sidebar from '~/components/common/sidebar/Sidebar'
-import Icon from '~/components/common/icons/Icon'
+import Sidebar from '~/components/sidebar/Sidebar'
+import Icon from '~/components/icons/Icon'
 
 export default {
   name: 'Default',

@@ -3,14 +3,14 @@
 </template>
 
 <script>
-import Map from '~/components/common/icons/Map'
-import DocumentText from '~/components/common/icons/DocumentText'
-import PieChart from '~/components/common/icons/PieChart'
-import Calendar from '~/components/common/icons/Calendar'
-import UserGroup from '~/components/common/icons/UserGroup'
-import XCircle from '~/components/common/icons/XCircle'
-import Coffee from '~/components/common/icons/Coffee'
-import Menu from '~/components/common/icons/Menu'
+import Map from '~/components/icons/Map'
+import DocumentText from '~/components/icons/DocumentText'
+import PieChart from '~/components/icons/PieChart'
+import Calendar from '~/components/icons/Calendar'
+import UserGroup from '~/components/icons/UserGroup'
+import XCircle from '~/components/icons/XCircle'
+import Coffee from '~/components/icons/Coffee'
+import Menu from '~/components/icons/Menu'
 
 export default {
   name: 'Icon',

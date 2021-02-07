@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import Icon from '~/components/common/icons/Icon'
+import Icon from '~/components/icons/Icon'
 
 export default {
   name: 'CoffeeButton',
