@@ -11,6 +11,9 @@ import UserGroup from '~/components/icons/UserGroup'
 import XCircle from '~/components/icons/XCircle'
 import Coffee from '~/components/icons/Coffee'
 import Menu from '~/components/icons/Menu'
+import DocumentDuplicate from '~/components/icons/DocumentDuplicate'
+import Cash from '~/components/icons/Cash'
+import Scale from '~/components/icons/Scale'
 
 export default {
   name: 'Icon',
@@ -36,6 +39,8 @@ export default {
           return 'w-6 h-6'
         case 'large':
           return 'w-8 h-8'
+        case 'huge':
+          return 'w-16 h-16'
         default:
           return 'w-0 h-0'
       }
@@ -58,6 +63,12 @@ export default {
           return Coffee
         case 'menu':
           return Menu
+        case 'documentduplicate':
+          return DocumentDuplicate
+        case 'cash':
+          return Cash
+        case 'scale':
+          return Scale
         default:
           return null
       }

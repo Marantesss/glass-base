@@ -19,7 +19,7 @@
 
       <div class="flex-grow">
         <!-- ROUTES -->
-        <div class="grid grid-col-1 gap-2 pb-10">
+        <div class="grid grid-cols-1 gap-2 pb-10">
           <NuxtLink v-for="route in routes" :key="route.name" :to="route.path">
             <SidebarButton
               :active="$nuxt.$route.path === route.path"
@@ -30,7 +30,7 @@
           </NuxtLink>
         </div>
         <!-- TIME -->
-        <div class="grid grid-col-1 gap-2">
+        <div class="grid grid-cols-1 gap-2">
           <DateInput label="De" />
           <DateInput label="Até" />
         </div>

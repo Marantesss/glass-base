@@ -1,9 +1,11 @@
 <template>
   <div>
     <Sidebar />
-    <section class="transition-all duration-500 ease-in-out lg:ml-72">
+    <div
+      class="transition-all duration-500 ease-in-out lg:ml-72 bg-gray-background min-h-screen p-4 pt-12 lg:p-4"
+    >
       <Nuxt />
-    </section>
+    </div>
   </div>
 </template>
 

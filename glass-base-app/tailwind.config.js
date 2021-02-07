@@ -23,6 +23,7 @@ module.exports = {
         light: '#E5E5E5', // white
         'gray-light': '#A6B0C4', // light grey
         'gray-dark': '#585D6D', // dark grey
+        'gray-background': '#EDEFF3',
       },
       height: {
         72: '18rem',
