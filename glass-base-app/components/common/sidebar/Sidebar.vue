@@ -51,8 +51,7 @@ export default {
   },
 
   data: () => ({
-    startDate: null,
-    endDate: new Date(),
+    isOpen: true,
     routes: [
       {
         name: 'Dashboard',
@@ -81,7 +80,15 @@ export default {
 
 <style scoped>
 .sidebar {
-  @apply w-72 bg-glass-purple min-h-screen px-6 py-2 text-light;
+  @apply w-72 bg-glass-purple min-h-screen px-6 py-2 text-light fixed transition-all duration-500 ease-in-out;
+  left: -18rem; /* 18rem = w-72 */
+}
+
+@screen md {
+  .sidebar {
+    @apply transform;
+    left: 0rem;
+  }
 }
 
 .logo {

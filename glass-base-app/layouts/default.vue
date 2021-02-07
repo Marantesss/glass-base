@@ -1,7 +1,9 @@
 <template>
-  <div class="flex">
+  <div>
     <Sidebar />
-    <Nuxt />
+    <section class="transition-all duration-500 ease-in-out md:ml-72">
+      <Nuxt />
+    </section>
   </div>
 </template>
 
