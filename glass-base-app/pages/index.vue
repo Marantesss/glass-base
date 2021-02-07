@@ -13,7 +13,7 @@
       />
       <ChartCard class="col-span-3 row-span-3" />
       <TableCard
-        v-for="cenas in [1, 2, 3]"
+        v-for="cenas in ['1', '2', '3']"
         :key="cenas"
         class="row-span-3"
         :title="cenas"

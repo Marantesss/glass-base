@@ -30,10 +30,7 @@
           </NuxtLink>
         </div>
         <!-- TIME -->
-        <div class="grid grid-cols-1 gap-2">
-          <DateInput label="De" />
-          <DateInput label="Até" />
-        </div>
+        <DateInputs />
       </div>
 
       <!-- COFFEE -->
@@ -55,7 +52,7 @@
 import Logo from '~/components/Logo'
 import SidebarButton from '~/components/sidebar/SidebarButton'
 import CoffeeButton from '~/components/sidebar/CoffeeButton'
-import DateInput from '~/components/sidebar/DateInput'
+import DateInputs from '~/components/sidebar/DateInputs'
 
 export default {
   name: 'Sidebar',
@@ -64,7 +61,7 @@ export default {
     Logo,
     SidebarButton,
     CoffeeButton,
-    DateInput,
+    DateInputs,
   },
 
   data: () => ({
