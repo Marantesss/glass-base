@@ -19,7 +19,7 @@ export default {
 
 <style scoped>
 .button {
-  @apply w-full flex items-center justify-center py-4 rounded-lg bg-transparent border-white border-2 mb-4 mt-6 outline-none;
+  @apply w-full flex items-center justify-center py-4 rounded-lg bg-transparent border-white text-white border-2 mb-4 mt-6 outline-none;
 }
 
 .button:hover {
