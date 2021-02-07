@@ -1,5 +1,5 @@
 <template>
-  <Card>
+  <Card class="flex justify-between items-center">
     <template slot="icon">
       <span class="pr-2">
         <Icon :icon="icon" class="text-glass-purple" size="huge" />

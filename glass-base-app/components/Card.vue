@@ -18,8 +18,6 @@ export default {
 
 <style scoped>
 .card {
-  /* layout */
-  @apply flex justify-between items-center;
   /* STYLE */
   @apply bg-white rounded-lg p-4;
 }

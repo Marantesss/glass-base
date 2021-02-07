@@ -5,7 +5,8 @@
       <span class="text-glass-purple">{{ endDateFormatted }}</span> e
       <span class="text-glass-purple">{{ startDateFormatted }}</span>
     </h2>
-    <section class="grid grid-cols-3 gap-2">
+    <!-- TODO: RESPONSIVENESS -->
+    <section class="grid grid-rows-7 grid-cols-3 gap-6">
       <BigNumberCard
         v-for="bigNumber in bigNumbers"
         :key="bigNumber.title"
@@ -13,18 +14,29 @@
         :value="bigNumber.value"
         :icon="bigNumber.icon"
       />
+      <ChartCard class="col-span-3 row-span-3" />
+      <TableCard
+        v-for="cenas in [1, 2, 3]"
+        :key="cenas"
+        class="row-span-3"
+        :title="cenas"
+      />
     </section>
   </div>
 </template>
 
 <script>
 import BigNumberCard from '~/components/BigNumberCard'
+import ChartCard from '~/components/ChartCard'
+import TableCard from '~/components/TableCard'
 
 export default {
   name: 'Index',
 
   components: {
     BigNumberCard,
+    ChartCard,
+    TableCard,
   },
 
   data: () => ({
