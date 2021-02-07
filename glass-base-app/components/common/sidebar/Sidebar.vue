@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar text-light">
+  <div class="sidebar flex flex-col justify-between">
     <!-- LOGO -->
     <div>
       <div class="logo">
@@ -9,20 +9,22 @@
       <span class="line-separator"></span>
     </div>
     <!-- ROUTES -->
-    <div class="grid grid-col-1 gap-2">
-      <NuxtLink v-for="route in routes" :key="route.name" :to="route.path">
-        <SidebarButton
-          :active="$nuxt.$route.path === route.path"
-          :icon="route.icon"
-        >
-          {{ route.name }}
-        </SidebarButton>
-      </NuxtLink>
-    </div>
-    <!-- TIME -->
-    <div class="grid grid-col-1 gap-2">
-      <DateInput label="De" />
-      <DateInput label="Até" />
+    <div class="flex-grow">
+      <div class="grid grid-col-1 gap-2 pb-10">
+        <NuxtLink v-for="route in routes" :key="route.name" :to="route.path">
+          <SidebarButton
+            :active="$nuxt.$route.path === route.path"
+            :icon="route.icon"
+          >
+            {{ route.name }}
+          </SidebarButton>
+        </NuxtLink>
+      </div>
+      <!-- TIME -->
+      <div class="grid grid-col-1 gap-2">
+        <DateInput label="De" />
+        <DateInput label="Até" />
+      </div>
     </div>
     <!-- COFFEE -->
     <div>
@@ -79,10 +81,7 @@ export default {
 
 <style scoped>
 .sidebar {
-  /* Style */
-  @apply w-72 bg-glass-purple min-h-screen px-6 py-2;
-  /* Layout */
-  @apply flex flex-col justify-between;
+  @apply w-72 bg-glass-purple min-h-screen px-6 py-2 text-light;
 }
 
 .logo {

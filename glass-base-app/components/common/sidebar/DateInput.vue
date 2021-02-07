@@ -33,6 +33,10 @@ export default {
       default: null,
     },
   },
+
+  data: () => ({
+    date: null,
+  }),
 }
 </script>
 
