@@ -58,8 +58,7 @@ export default {
       get() {
         return this.getStartDate
       },
-      set(startDateString) {
-        const startDate = new Date(startDateString)
+      set(startDate) {
         this.setStartDate({ startDate })
       },
     },
@@ -67,8 +66,7 @@ export default {
       get() {
         return this.getEndDate
       },
-      set(endDateString) {
-        const endDate = new Date(endDateString)
+      set(endDate) {
         this.setEndDate({ endDate })
       },
     },

@@ -1,6 +1,6 @@
 export const state = () => ({
   startDate: null,
-  endDate: new Date(),
+  endDate: new Date().toLocaleDateString(),
 })
 
 export const getters = {

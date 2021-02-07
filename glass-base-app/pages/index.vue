@@ -39,7 +39,11 @@ export default {
   },
 
   data: () => ({
-    // TODO use state management VUEX
+    dateStringOptions: {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    },
     bigNumbers: [
       {
         title: 'Número de Contratos',
@@ -71,18 +75,16 @@ export default {
       getEndDate: 'dateInputs/endDate',
     }),
     startDateFormatted() {
-      return new Intl.DateTimeFormat('pt-PT', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      }).format(this.getStartDate)
+      return new Date(this.getStartDate).toLocaleDateString(
+        'pt-PT',
+        this.dateStringOptions
+      )
     },
     endDateFormatted() {
-      return new Intl.DateTimeFormat('pt-PT', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      }).format(this.getEndDate)
+      return new Date(this.getEndDate).toLocaleDateString(
+        'pt-PT',
+        this.dateStringOptions
+      )
     },
     titleString() {
       if (this.getStartDate === null) {
