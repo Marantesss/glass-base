@@ -121,7 +121,7 @@ export default {
   @apply bg-gray-300;
 }
 
-@screen md {
+@screen lg {
   .sidebar {
     left: 0rem;
   }

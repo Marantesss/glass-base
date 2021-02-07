@@ -1,7 +1,5 @@
 <template>
-  <button
-    class="w-full flex items-center justify-center py-4 rounded-lg bg-white text-dark mb-4 mt-6 outline-none"
-  >
+  <button class="button">
     <Icon icon="Coffee" size="large" />
     <span class="pl-2 uppercase"> Buy me a coffee </span>
   </button>
@@ -19,4 +17,12 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped>
+.button {
+  @apply w-full flex items-center justify-center py-4 rounded-lg bg-transparent border-white border-2 mb-4 mt-6 outline-none;
+}
+
+.button:hover {
+  @apply bg-white text-dark;
+}
+</style>
