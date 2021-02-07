@@ -8,8 +8,14 @@
 </template>
 
 <script>
+import Icon from '~/components/common/icons/Icon'
+
 export default {
   name: 'CoffeeButton',
+
+  components: {
+    Icon,
+  },
 }
 </script>
 

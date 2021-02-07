@@ -10,6 +10,7 @@ import Calendar from '~/components/common/icons/Calendar'
 import UserGroup from '~/components/common/icons/UserGroup'
 import XCircle from '~/components/common/icons/XCircle'
 import Coffee from '~/components/common/icons/Coffee'
+import Menu from '~/components/common/icons/Menu'
 
 export default {
   name: 'Icon',
@@ -55,6 +56,8 @@ export default {
           return XCircle
         case 'coffee':
           return Coffee
+        case 'menu':
+          return Menu
         default:
           return null
       }
