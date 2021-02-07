@@ -1,10 +1,7 @@
 <template>
   <div>
-    <h2 class="page-title">
-      Dados entre
-      <span class="text-glass-purple">{{ endDateFormatted }}</span> e
-      <span class="text-glass-purple">{{ startDateFormatted }}</span>
-    </h2>
+    <!-- eslint-disable-next-line vue/no-v-html -->
+    <h2 class="page-title" v-html="titleString"></h2>
     <!-- TODO: RESPONSIVENESS -->
     <section class="grid grid-rows-7 grid-cols-3 gap-6">
       <BigNumberCard
@@ -26,6 +23,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 import BigNumberCard from '~/components/BigNumberCard'
 import ChartCard from '~/components/ChartCard'
 import TableCard from '~/components/TableCard'
@@ -41,8 +40,6 @@ export default {
 
   data: () => ({
     // TODO use state management VUEX
-    startDate: new Date(),
-    endDate: new Date('2021-01-01'),
     bigNumbers: [
       {
         title: 'Número de Contratos',
@@ -69,19 +66,32 @@ export default {
   }),
 
   computed: {
+    ...mapGetters({
+      getStartDate: 'dateInputs/startDate',
+      getEndDate: 'dateInputs/endDate',
+    }),
     startDateFormatted() {
       return new Intl.DateTimeFormat('pt-PT', {
         year: 'numeric',
         month: 'long',
         day: 'numeric',
-      }).format(this.startDate)
+      }).format(this.getStartDate)
     },
     endDateFormatted() {
       return new Intl.DateTimeFormat('pt-PT', {
         year: 'numeric',
         month: 'long',
         day: 'numeric',
-      }).format(this.endDate)
+      }).format(this.getEndDate)
+    },
+    titleString() {
+      if (this.getStartDate === null) {
+        return `Dados até
+          <span class="text-glass-purple">${this.endDateFormatted}</span>`
+      }
+      return `Dados entre
+        <span class="text-glass-purple">${this.startDateFormatted}</span> e
+        <span class="text-glass-purple">${this.endDateFormatted}</span>`
     },
   },
 }
