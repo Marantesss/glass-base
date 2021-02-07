@@ -123,22 +123,23 @@ const cleanContract = (contractData) => ({
   // closeDate: formatDateFromString(contractData.closeDate)
 
   // contracted and contracting reference
-  contracted: contractData.contracted.map(
+  // Some contracts have contracted: null. http://www.base.gov.pt/base2/rest/contratos/5001426
+  contracted: contractData.contracted ? contractData.contracted.map(
     // add contract id to entity object
     (entity) => ({
       ...entity,
       contractId: contractData.id,
       description: formatTitleCase(entity.description),
     }),
-  ),
-  contracting: contractData.contracting.map(
+  ) : [],
+  contracting: contractData.contracting ? contractData.contracting.map(
     // add contract id to entity object
     (entity) => ({
       ...entity,
       contractId: contractData.id,
       description: formatTitleCase(entity.description),
     }),
-  ),
+  ) : [],
   // - monetary values
   initialContractualPrice: formatCurrencyFromString(contractData.initialContractualPrice),
   totalEffectivePrice: formatCurrencyFromString(contractData.totalEffectivePrice),
