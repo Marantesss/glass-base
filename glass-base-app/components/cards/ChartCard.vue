@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import Card from '~/components/Card'
+import Card from '~/components/cards/Card'
 
 export default {
   name: 'ChartCard',

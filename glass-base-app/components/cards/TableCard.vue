@@ -6,7 +6,15 @@
 </template>
 
 <script>
+import Card from '~/components/cards/Card'
+
 export default {
+  name: 'TableCard',
+
+  components: {
+    Card,
+  },
+
   props: {
     title: {
       type: String,

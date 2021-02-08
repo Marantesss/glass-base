@@ -25,9 +25,9 @@
 <script>
 import { mapGetters } from 'vuex'
 
-import BigNumberCard from '~/components/BigNumberCard'
-import ChartCard from '~/components/ChartCard'
-import TableCard from '~/components/TableCard'
+import BigNumberCard from '~/components/cards/BigNumberCard'
+import ChartCard from '~/components/cards/ChartCard'
+import TableCard from '~/components/cards/TableCard'
 
 export default {
   name: 'Index',
