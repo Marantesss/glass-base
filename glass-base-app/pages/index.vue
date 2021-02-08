@@ -16,11 +16,22 @@
         />
       </div>
       <!-- Line Chart Row -->
-      <div class="col-span-3 row-span-3">
+      <div class="col-span-3">
         <ChartCard />
       </div>
-      <div v-for="cenas in ['1', '2', '3']" :key="cenas" class="row-span-3">
-        <TableCard :title="cenas" />
+      <!-- Doughnut Chart -->
+      <div class="col-span-3 md:col-span-1">
+        <ContractTypeCard title="Tipo de procedimento" />
+      </div>
+      <!-- Top tables -->
+      <div class="col-span-3 md:col-span-1">
+        <TableCard
+          title="Top entidades contratantes"
+          :values="topContractors"
+        />
+      </div>
+      <div class="col-span-3 md:col-span-1">
+        <TableCard title="Top entidades contratadas" :values="topContracted" />
       </div>
     </section>
   </div>
@@ -32,6 +43,7 @@ import { mapGetters } from 'vuex'
 import BigNumberCard from '~/components/cards/BigNumberCard'
 import ChartCard from '~/components/cards/ChartCard'
 import TableCard from '~/components/cards/TableCard'
+import ContractTypeCard from '~/components/cards/ContractTypeCard'
 
 export default {
   name: 'Index',
@@ -40,6 +52,7 @@ export default {
     BigNumberCard,
     ChartCard,
     TableCard,
+    ContractTypeCard,
   },
 
   data: () => ({
@@ -71,6 +84,114 @@ export default {
         icon: 'Scale',
       },
     ],
+    topContractors: {
+      number: [
+        {
+          name: 'Banana cenas LDA number',
+          value: 3456,
+        },
+        {
+          name: 'Banana cenas LDA',
+          value: 3456,
+        },
+        {
+          name: 'Banana cenas LDA',
+          value: 3456,
+        },
+        {
+          name: 'Banana cenas LDA',
+          value: 3456,
+        },
+        {
+          name: 'Banana cenas LDA',
+          value: 3456,
+        },
+        {
+          name: 'Banana cenas LDA',
+          value: 3456,
+        },
+      ],
+      value: [
+        {
+          name: 'Banana cenas LDA value',
+          value: 81923789123,
+        },
+        {
+          name: 'Banana cenas LDA',
+          value: 3456,
+        },
+        {
+          name: 'Banana cenas LDA',
+          value: 3456,
+        },
+        {
+          name: 'Banana cenas LDA',
+          value: 3456,
+        },
+        {
+          name: 'Banana cenas LDA',
+          value: 3456,
+        },
+        {
+          name: 'Banana cenas LDA',
+          value: 3456,
+        },
+      ],
+    },
+    topContracted: {
+      number: [
+        {
+          name: 'Banana cenas LDA number',
+          value: 3456,
+        },
+        {
+          name: 'Banana cenas LDA',
+          value: 3456,
+        },
+        {
+          name: 'Banana cenas LDA',
+          value: 3456,
+        },
+        {
+          name: 'Banana cenas LDA',
+          value: 3456,
+        },
+        {
+          name: 'Banana cenas LDA',
+          value: 3456,
+        },
+        {
+          name: 'Banana cenas LDA',
+          value: 3456,
+        },
+      ],
+      value: [
+        {
+          name: 'Banana cenas LDA value',
+          value: 3456,
+        },
+        {
+          name: 'Banana cenas LDA',
+          value: 3456,
+        },
+        {
+          name: 'Banana cenas LDA',
+          value: 3456,
+        },
+        {
+          name: 'Banana cenas LDA',
+          value: 3456,
+        },
+        {
+          name: 'Banana cenas LDA',
+          value: 3456,
+        },
+        {
+          name: 'Banana cenas LDA',
+          value: 3456,
+        },
+      ],
+    },
   }),
 
   computed: {
