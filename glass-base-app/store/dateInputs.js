@@ -1,5 +1,6 @@
-const maxDate = new Date().toLocaleDateString()
-const minDate = new Date('2008-06-21').toLocaleDateString()
+// TODO replace this eventually
+const maxDate = new Date('2021-02-22').toLocaleDateString()
+const minDate = new Date('2008-09-05').toLocaleDateString()
 
 export const state = () => ({
   startDate: minDate,

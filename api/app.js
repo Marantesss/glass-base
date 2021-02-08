@@ -6,6 +6,7 @@ const helmet = require('helmet')
 const { express: config } = require('./config')
 const middlewares = require('./middlewares')
 const indexRouter = require('./routes')
+const overviewRouter = require('./routes/overview')
 
 const app = express()
 
@@ -17,6 +18,7 @@ app.use(middlewares.timeout)
 
 /* Routers */
 app.use('/', indexRouter)
+app.use('/overview', overviewRouter)
 app.use(middlewares.notFound)
 
 /* Handlers */
