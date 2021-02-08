@@ -1,14 +1,12 @@
 <template>
   <Card class="flex justify-between items-center">
-    <template slot="icon">
-      <span class="pr-2">
-        <Icon :icon="icon" class="text-glass-purple" size="huge" />
-      </span>
-    </template>
-    <template slot="title">{{ title }}</template>
-    <template slot="body">
+    <span class="pr-2">
+      <Icon :icon="icon" class="text-glass-purple" size="huge" />
+    </span>
+    <div class="flex-grow">
+      <h3 class="card-title" v-text="title"></h3>
       <span class="value" v-text="value"></span>
-    </template>
+    </div>
   </Card>
 </template>
 

@@ -1,9 +1,7 @@
 <template>
   <Card>
-    <template slot="title">{{ title }}</template>
-    <template slot="body">
-      <div class="bg-glass-purple-light-2 w-full h-full"></div>
-    </template>
+    <h3 class="card-title" v-text="title"></h3>
+    <div class="bg-glass-purple-light-2 w-full h-full"></div>
   </Card>
 </template>
 

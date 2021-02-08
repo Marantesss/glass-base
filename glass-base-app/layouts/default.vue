@@ -23,4 +23,8 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.card-title {
+  @apply text-gray-light font-bold;
+}
+</style>
