@@ -2,22 +2,7 @@
   <Card class="w-full h-full">
     <h3 class="card-title mb-2" v-text="title"></h3>
     <!-- Tabs -->
-    <div class="tab">
-      <button
-        class="tab-button"
-        :class="{ 'tab-button-active': showNumbers }"
-        @click="toggleNumbers()"
-      >
-        Número de Contratos
-      </button>
-      <button
-        class="tab-button"
-        :class="{ 'tab-button-active': !showNumbers }"
-        @click="toggleValues()"
-      >
-        Valor de Contratos
-      </button>
-    </div>
+    <ContractTabs :show-numbers="showNumbers" @toggleNumbers="toggleNumbers" />
     <!-- Table -->
     <div class="table">
       <div v-for="(value, index) in shownValues" :key="index" class="row">
@@ -31,12 +16,14 @@
 
 <script>
 import Card from '~/components/cards/Card'
+import ContractTabs from '~/components/helpers/ContractTabs'
 
 export default {
   name: 'TableCard',
 
   components: {
     Card,
+    ContractTabs,
   },
 
   props: {
@@ -45,7 +32,7 @@ export default {
       required: true,
     },
     values: {
-      type: Array,
+      type: Object,
       required: true,
     },
   },
@@ -61,11 +48,8 @@ export default {
   },
 
   methods: {
-    toggleNumbers() {
-      this.showNumbers = true
-    },
-    toggleValues() {
-      this.showNumbers = false
+    toggleNumbers(value) {
+      this.showNumbers = value
     },
   },
 }
@@ -90,17 +74,5 @@ export default {
 
 .value {
   @apply col-span-3 text-gray-light text-right;
-}
-
-.tab {
-  @apply flex justify-center text-center text-gray-light text-xs;
-}
-
-.tab-button {
-  @apply w-full pt-2 pb-3 border-b-2 outline-none;
-}
-
-.tab-button-active {
-  @apply border-glass-purple text-glass-purple;
 }
 </style>

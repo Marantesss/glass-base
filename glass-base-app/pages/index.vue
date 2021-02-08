@@ -1,13 +1,18 @@
 <template>
-  <div>
-    <!-- eslint-disable-next-line vue/no-v-html -->
-    <h2 class="page-title" v-html="titleString"></h2>
-    <section class="grid grid-cols-3 gap-6">
+  <div v-if="loading">LOADING</div>
+  <div v-else-if="error">ERROR</div>
+  <div v-else>
+    <h2 class="page-title">
+      Dados entre
+      <span class="text-glass-purple" v-text="startDateFormatted"></span> e
+      <span class="text-glass-purple" v-text="endDateFormatted"></span>
+    </h2>
+    <section class="grid grid-cols-12 gap-6">
       <!-- Big Numbers Row -->
       <div
         v-for="bigNumber in bigNumbers"
         :key="bigNumber.title"
-        class="col-span-3 md:col-span-1"
+        class="col-span-12 md:col-span-4"
       >
         <BigNumberCard
           :title="bigNumber.title"
@@ -16,21 +21,21 @@
         />
       </div>
       <!-- Line Chart Row -->
-      <div class="col-span-3">
+      <div class="col-span-12">
         <ChartCard />
       </div>
       <!-- Doughnut Chart -->
-      <div class="col-span-3 md:col-span-1">
+      <div class="col-span-12 xl:col-span-4">
         <ContractTypeCard title="Tipo de procedimento" />
       </div>
       <!-- Top tables -->
-      <div class="col-span-3 md:col-span-1">
+      <div class="col-span-12 md:col-span-6 xl:col-span-4">
         <TableCard
           title="Top entidades contratantes"
           :values="topContractors"
         />
       </div>
-      <div class="col-span-3 md:col-span-1">
+      <div class="col-span-12 md:col-span-6 xl:col-span-4">
         <TableCard title="Top entidades contratadas" :values="topContracted" />
       </div>
     </section>
@@ -56,6 +61,8 @@ export default {
   },
 
   data: () => ({
+    error: false,
+    loading: false,
     dateStringOptions: {
       year: 'numeric',
       month: 'long',
@@ -64,23 +71,17 @@ export default {
     bigNumbers: [
       {
         title: 'Número de Contratos',
-        value: new Intl.NumberFormat('pt-PT').format(1235952),
+        value: null,
         icon: 'DocumentDuplicate',
       },
       {
         title: 'Valor de Contratos',
-        value: new Intl.NumberFormat('pt-PT', {
-          style: 'currency',
-          currency: 'EUR',
-        }).format(198235000),
+        value: null,
         icon: 'Cash',
       },
       {
         title: 'Valor Médio por Contrato',
-        value: new Intl.NumberFormat('pt-PT', {
-          style: 'currency',
-          currency: 'EUR',
-        }).format(45761),
+        value: null,
         icon: 'Scale',
       },
     ],
@@ -220,6 +221,32 @@ export default {
         <span class="text-glass-purple">${this.startDateFormatted}</span> e
         <span class="text-glass-purple">${this.endDateFormatted}</span>`
     },
+  },
+
+  async created() {
+    this.loading = true
+    try {
+      const {
+        contractCount,
+        contractValue,
+        contractAvgValue,
+      } = await this.$axios.$get('http://localhost:8000') // TODO PLACE THIS SOMEWHERE ELSE
+      // TODO recycle this using mixins or something else
+      this.bigNumbers[0].value = new Intl.NumberFormat('pt-PT').format(
+        contractCount
+      )
+      this.bigNumbers[1].value = new Intl.NumberFormat('pt-PT', {
+        style: 'currency',
+        currency: 'EUR',
+      }).format(contractValue)
+      this.bigNumbers[2].value = new Intl.NumberFormat('pt-PT', {
+        style: 'currency',
+        currency: 'EUR',
+      }).format(contractAvgValue)
+    } catch (error) {
+      this.error = true
+    }
+    this.loading = false
   },
 }
 </script>

@@ -41,32 +41,44 @@ export default {
     }),
   }),
 
+  watch: {
+    dataset() {
+      this.buildChart()
+    },
+  },
+
   mounted() {
-    this.gradient = this.$refs.canvas
-      .getContext('2d')
-      .createLinearGradient(0, 0, 0, 450)
+    this.buildChart()
+  },
 
-    // transparent white
-    this.gradient.addColorStop(0, `${this.color}dd`)
-    // transparent white
-    this.gradient.addColorStop(0.7, '#ffffff00')
-    this.gradient.addColorStop(1, '#ffffff00')
+  methods: {
+    buildChart() {
+      this.gradient = this.$refs.canvas
+        .getContext('2d')
+        .createLinearGradient(0, 0, 0, 450)
 
-    this.renderChart(
-      {
-        labels: this.labels,
-        datasets: [
-          {
-            // actual data
-            ...this.dataset,
-            // styles
-            ...this.datasetStyles(this.color),
-            backgroundColor: this.gradient,
-          },
-        ],
-      },
-      this.options
-    )
+      // transparent white
+      this.gradient.addColorStop(0, `${this.color}dd`)
+      // transparent white
+      // this.gradient.addColorStop(0.7, '#ffffff00')
+      this.gradient.addColorStop(1, '#ffffff00')
+
+      this.renderChart(
+        {
+          labels: this.labels,
+          datasets: [
+            {
+              // actual data
+              ...this.dataset,
+              // styles
+              ...this.datasetStyles(this.color),
+              backgroundColor: this.gradient,
+            },
+          ],
+        },
+        this.options
+      )
+    },
   },
 }
 </script>

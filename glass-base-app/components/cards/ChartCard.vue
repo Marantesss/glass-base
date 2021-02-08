@@ -1,12 +1,19 @@
 <template>
   <Card>
-    <h3 class="card-title mb-2">Evolução ao longo do tempo</h3>
+    <div class="mb-2 flex justify-between">
+      <h3 class="card-title">Evolução ao longo do tempo</h3>
+      <ContractTabs
+        class="w-96"
+        :show-numbers="showNumbers"
+        @toggleNumbers="toggleNumbers"
+      />
+    </div>
     <LineChartGradient
       cenas="cenas"
       :labels="labels"
-      :dataset="dataset"
+      :dataset="shownValues"
       :options="chartOptions"
-      :height="300"
+      :height="400"
     />
   </Card>
 </template>
@@ -14,6 +21,7 @@
 <script>
 import Card from '~/components/cards/Card'
 import LineChartGradient from '~/components/charts/LineChartGradient'
+import ContractTabs from '~/components/helpers/ContractTabs'
 
 export default {
   name: 'ChartCard',
@@ -21,9 +29,11 @@ export default {
   components: {
     Card,
     LineChartGradient,
+    ContractTabs,
   },
 
   data: () => ({
+    showNumbers: true,
     labels: [
       '2019-06',
       '2019-07',
@@ -41,6 +51,10 @@ export default {
     dataset: {
       label: 'Contratos',
       data: [10, 15, 20, 30, 40, 50, 60, 70, 34, 45, 11, 78, 45],
+    },
+    dataset1: {
+      label: 'Miguel',
+      data: [10, 15, 20, 30, 40, 50, 60, 70, 34, 45, 11, 78, 45].sort(),
     },
     chartOptions: {
       responsive: true,
@@ -78,6 +92,18 @@ export default {
       },
     },
   }),
+
+  computed: {
+    shownValues() {
+      return this.showNumbers ? this.dataset : this.dataset1
+    },
+  },
+
+  methods: {
+    toggleNumbers(value) {
+      this.showNumbers = value
+    },
+  },
 }
 </script>
 

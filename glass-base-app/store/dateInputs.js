@@ -1,6 +1,9 @@
+const maxDate = new Date().toLocaleDateString()
+const minDate = new Date('2008-06-21').toLocaleDateString()
+
 export const state = () => ({
-  startDate: null,
-  endDate: new Date().toLocaleDateString(),
+  startDate: minDate,
+  endDate: maxDate,
 })
 
 export const getters = {
@@ -14,10 +17,18 @@ export const getters = {
 
 export const mutations = {
   setStartDate(state, startDate) {
-    state.startDate = startDate
+    if (startDate === '') {
+      state.startDate = minDate
+    } else {
+      state.startDate = startDate
+    }
   },
   setEndDate(state, endDate) {
-    state.endDate = endDate
+    if (endDate === '') {
+      state.endDate = maxDate
+    } else {
+      state.endDate = endDate
+    }
   },
 }
 

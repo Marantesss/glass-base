@@ -109,9 +109,13 @@ export default {
 }
 
 .sidebar-hamburguer {
-  @apply fixed outline-none rounded-lg p-1;
+  @apply fixed rounded-lg p-1;
   left: 10px;
   top: 10px;
+}
+
+.sidebar-hamburguer:focus {
+  @apply outline-none;
 }
 
 .sidebar-hamburguer:hover {

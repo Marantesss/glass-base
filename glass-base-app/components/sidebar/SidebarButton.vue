@@ -37,7 +37,11 @@ export default {
   /* Layout */
   @apply w-full flex items-center p-4;
   /* Style */
-  @apply rounded-lg outline-none;
+  @apply rounded-lg;
+}
+
+.button:focus {
+  @apply outline-none;
 }
 
 .button:hover {
