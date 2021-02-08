@@ -2,15 +2,20 @@
   <div>
     <!-- eslint-disable-next-line vue/no-v-html -->
     <h2 class="page-title" v-html="titleString"></h2>
-    <!-- TODO: RESPONSIVENESS -->
-    <section class="grid grid-rows-7 grid-cols-3 gap-6">
-      <div v-for="bigNumber in bigNumbers" :key="bigNumber.title">
+    <section class="grid grid-cols-3 gap-6">
+      <!-- Big Numbers Row -->
+      <div
+        v-for="bigNumber in bigNumbers"
+        :key="bigNumber.title"
+        class="col-span-3 md:col-span-1"
+      >
         <BigNumberCard
           :title="bigNumber.title"
           :value="bigNumber.value"
           :icon="bigNumber.icon"
         />
       </div>
+      <!-- Line Chart Row -->
       <div class="col-span-3 row-span-3">
         <ChartCard />
       </div>

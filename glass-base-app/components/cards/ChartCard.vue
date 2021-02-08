@@ -1,6 +1,6 @@
 <template>
-  <Card class="">
-    <h3 class="card-title">Evolução ao longo do tempo</h3>
+  <Card>
+    <h3 class="card-title mb-2">Evolução ao longo do tempo</h3>
     <LineChartGradient
       cenas="cenas"
       :labels="labels"
