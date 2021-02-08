@@ -4,20 +4,19 @@
     <h2 class="page-title" v-html="titleString"></h2>
     <!-- TODO: RESPONSIVENESS -->
     <section class="grid grid-rows-7 grid-cols-3 gap-6">
-      <BigNumberCard
-        v-for="bigNumber in bigNumbers"
-        :key="bigNumber.title"
-        :title="bigNumber.title"
-        :value="bigNumber.value"
-        :icon="bigNumber.icon"
-      />
-      <ChartCard class="col-span-3 row-span-3" />
-      <TableCard
-        v-for="cenas in ['1', '2', '3']"
-        :key="cenas"
-        class="row-span-3"
-        :title="cenas"
-      />
+      <div v-for="bigNumber in bigNumbers" :key="bigNumber.title">
+        <BigNumberCard
+          :title="bigNumber.title"
+          :value="bigNumber.value"
+          :icon="bigNumber.icon"
+        />
+      </div>
+      <div class="col-span-3 row-span-3">
+        <ChartCard />
+      </div>
+      <div v-for="cenas in ['1', '2', '3']" :key="cenas" class="row-span-3">
+        <TableCard :title="cenas" />
+      </div>
     </section>
   </div>
 </template>

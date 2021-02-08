@@ -1,5 +1,5 @@
 <template>
-  <Card>
+  <Card class="w-full h-full">
     <h3 class="card-title" v-text="title"></h3>
     <div class="bg-glass-purple-light-2 w-full h-full"></div>
   </Card>
