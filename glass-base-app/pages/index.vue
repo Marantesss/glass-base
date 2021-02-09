@@ -22,7 +22,11 @@
       </div>
       <!-- Line Chart Row -->
       <div class="col-span-12">
-        <ChartCard />
+        <ChartCard
+          :labels="chartLabels"
+          :numbers-dataset="chartContractNumbers"
+          :values-dataset="chartContractValues"
+        />
       </div>
       <!-- Doughnut Chart -->
       <div class="col-span-12 xl:col-span-4">
@@ -63,11 +67,6 @@ export default {
   data: () => ({
     error: false,
     loading: false,
-    dateStringOptions: {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    },
     bigNumbers: [
       {
         title: 'Número de Contratos',
@@ -85,114 +84,12 @@ export default {
         icon: 'Scale',
       },
     ],
-    topContractors: {
-      number: [
-        {
-          name: 'Banana cenas LDA number',
-          value: 3456,
-        },
-        {
-          name: 'Banana cenas LDA',
-          value: 3456,
-        },
-        {
-          name: 'Banana cenas LDA',
-          value: 3456,
-        },
-        {
-          name: 'Banana cenas LDA',
-          value: 3456,
-        },
-        {
-          name: 'Banana cenas LDA',
-          value: 3456,
-        },
-        {
-          name: 'Banana cenas LDA',
-          value: 3456,
-        },
-      ],
-      value: [
-        {
-          name: 'Banana cenas LDA value',
-          value: 81923789123,
-        },
-        {
-          name: 'Banana cenas LDA',
-          value: 3456,
-        },
-        {
-          name: 'Banana cenas LDA',
-          value: 3456,
-        },
-        {
-          name: 'Banana cenas LDA',
-          value: 3456,
-        },
-        {
-          name: 'Banana cenas LDA',
-          value: 3456,
-        },
-        {
-          name: 'Banana cenas LDA',
-          value: 3456,
-        },
-      ],
-    },
-    topContracted: {
-      number: [
-        {
-          name: 'Banana cenas LDA number',
-          value: 3456,
-        },
-        {
-          name: 'Banana cenas LDA',
-          value: 3456,
-        },
-        {
-          name: 'Banana cenas LDA',
-          value: 3456,
-        },
-        {
-          name: 'Banana cenas LDA',
-          value: 3456,
-        },
-        {
-          name: 'Banana cenas LDA',
-          value: 3456,
-        },
-        {
-          name: 'Banana cenas LDA',
-          value: 3456,
-        },
-      ],
-      value: [
-        {
-          name: 'Banana cenas LDA value',
-          value: 3456,
-        },
-        {
-          name: 'Banana cenas LDA',
-          value: 3456,
-        },
-        {
-          name: 'Banana cenas LDA',
-          value: 3456,
-        },
-        {
-          name: 'Banana cenas LDA',
-          value: 3456,
-        },
-        {
-          name: 'Banana cenas LDA',
-          value: 3456,
-        },
-        {
-          name: 'Banana cenas LDA',
-          value: 3456,
-        },
-      ],
-    },
+    topContractors: {},
+    topContracted: {},
+    // TODO think of better names
+    chartLabels: [],
+    chartContractNumbers: [],
+    chartContractValues: [],
   }),
 
   computed: {
@@ -201,25 +98,10 @@ export default {
       getEndDate: 'dateInputs/endDate',
     }),
     startDateFormatted() {
-      return new Date(this.getStartDate).toLocaleDateString(
-        'pt-PT',
-        this.dateStringOptions
-      )
+      return this.$formatDate(this.getStartDate)
     },
     endDateFormatted() {
-      return new Date(this.getEndDate).toLocaleDateString(
-        'pt-PT',
-        this.dateStringOptions
-      )
-    },
-    titleString() {
-      if (this.getStartDate === null) {
-        return `Dados até
-          <span class="text-glass-purple">${this.endDateFormatted}</span>`
-      }
-      return `Dados entre
-        <span class="text-glass-purple">${this.startDateFormatted}</span> e
-        <span class="text-glass-purple">${this.endDateFormatted}</span>`
+      return this.$formatDate(this.getEndDate)
     },
   },
 
@@ -230,23 +112,39 @@ export default {
         contractCount,
         contractValue,
         contractAvgValue,
-      } = await this.$axios.$get('http://localhost:8000') // TODO PLACE THIS SOMEWHERE ELSE
-      // TODO recycle this using mixins or something else
-      this.bigNumbers[0].value = new Intl.NumberFormat('pt-PT').format(
-        contractCount
-      )
-      this.bigNumbers[1].value = new Intl.NumberFormat('pt-PT', {
-        style: 'currency',
-        currency: 'EUR',
-      }).format(contractValue)
-      this.bigNumbers[2].value = new Intl.NumberFormat('pt-PT', {
-        style: 'currency',
-        currency: 'EUR',
-      }).format(contractAvgValue)
+        topContracted,
+        topContractors,
+        contractsOverTime,
+      } = await this.$axios.$get('/overview')
+
+      this.bigNumbers[0].value = this.$formatNumber(contractCount)
+      this.bigNumbers[1].value = this.$formatCurrency(contractValue)
+      this.bigNumbers[2].value = this.$formatCurrency(contractAvgValue)
+      this.topContracted = topContracted
+      this.topContractors = topContractors
+
+      this.chartLabels = this.getChartLabels(contractsOverTime.number)
+      this.chartContractNumbers = this.getChartDataset(contractsOverTime.number)
+      this.chartContractValues = this.getChartDataset(contractsOverTime.value)
     } catch (error) {
       this.error = true
     }
     this.loading = false
+  },
+
+  methods: {
+    getChartLabels(chartDataArray) {
+      const labels = []
+      chartDataArray.forEach((elem) =>
+        labels.push(`${elem.month}-${elem.year}`)
+      )
+      return labels
+    },
+    getChartDataset(chartDataArray) {
+      const dataset = []
+      chartDataArray.forEach((elem) => dataset.push(elem.value))
+      return dataset
+    },
   },
 }
 </script>

@@ -8,7 +8,7 @@
       <div v-for="(value, index) in shownValues" :key="index" class="row">
         <span class="position" v-text="index + 1"></span>
         <span class="name" v-text="value.name"></span>
-        <span class="value" v-text="value.value"> 123123 </span>
+        <span class="value" v-text="getFormattedValue(value.value)"></span>
       </div>
     </div>
   </Card>
@@ -50,6 +50,11 @@ export default {
   methods: {
     toggleNumbers(value) {
       this.showNumbers = value
+    },
+    getFormattedValue(value) {
+      return this.showNumbers
+        ? this.$formatNumber(value)
+        : this.$formatCurrency(value)
     },
   },
 }
