@@ -13,9 +13,9 @@ router.get('/', async (req, res) => {
 
   // perform queries asynchronously
   const [
-    contractCount,
-    contractValue,
-    contractAvgValue,
+    { contractCount },
+    { contractValue },
+    { contractAvgValue },
     contractsNumberOverTime,
     contractsValueOverTime,
     contractTypes,
