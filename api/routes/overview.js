@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
     { contractAvgValue },
     contractsNumberOverTime,
     contractsValueOverTime,
-    contractTypes,
+    contractingProcedureTypes,
     topContractedNumber,
     topContractedValue,
     topContractorsNumber,
@@ -58,11 +58,11 @@ router.get('/', async (req, res) => {
       .groupBy('month', 'year')
       .orderBy('month', 'asc'),
 
-    // CONTRACT TYPES
+    // CONTRACT PROCEDURE TYPES
     knex('contract')
-      .select('contractingProcedureType')
+      .select('contractingProcedureType as type')
       .count('contractingProcedureType as value')
-      .groupBy('contractingProcedureType')
+      .groupBy('type')
       .orderBy('value', 'desc')
       .limit(6),
 
@@ -105,7 +105,7 @@ router.get('/', async (req, res) => {
     contractCount,
     contractValue,
     contractAvgValue,
-    contractTypes,
+    contractingProcedureTypes,
     contractsOverTime: { number: contractsNumberOverTime, value: contractsValueOverTime },
     topContracted: { number: topContractedNumber, value: topContractedValue },
     topContractors: { number: topContractorsNumber, value: topContractorsValue },
