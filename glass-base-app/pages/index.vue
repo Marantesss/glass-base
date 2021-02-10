@@ -1,6 +1,6 @@
 <template>
-  <div v-if="loading">LOADING</div>
-  <div v-else-if="error">ERROR</div>
+  <Loading v-if="loading" />
+  <Error v-else-if="error" />
   <div v-else>
     <h2 class="page-title">
       Dados entre
@@ -53,6 +53,8 @@ import BigNumberCard from '~/components/cards/BigNumberCard'
 import ChartCard from '~/components/cards/ChartCard'
 import TableCard from '~/components/cards/TableCard'
 import ContractProceduresCard from '~/components/cards/ContractProceduresCard'
+import Loading from '~/components/helpers/Loading'
+import Error from '~/components/helpers/Error'
 
 export default {
   name: 'Index',
@@ -62,6 +64,8 @@ export default {
     ChartCard,
     TableCard,
     ContractProceduresCard,
+    Loading,
+    Error,
   },
 
   data: () => ({

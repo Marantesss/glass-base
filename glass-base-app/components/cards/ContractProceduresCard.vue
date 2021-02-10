@@ -127,7 +127,7 @@ export default {
 }
 
 .label-color {
-  @apply w-10 h-10 inline-block mr-4;
+  @apply w-8 h-8 inline-block mr-4;
   border-radius: 50%;
 }
 
