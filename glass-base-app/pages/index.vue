@@ -30,7 +30,7 @@
       </div>
       <!-- Doughnut Chart -->
       <div class="col-span-12 xl:col-span-4">
-        <ContractTypeCard title="Tipo de procedimento" />
+        <ContractProceduresCard :procedure-data="contractingProcedureTypes" />
       </div>
       <!-- Top tables -->
       <div class="col-span-12 md:col-span-6 xl:col-span-4">
@@ -52,7 +52,7 @@ import { mapGetters } from 'vuex'
 import BigNumberCard from '~/components/cards/BigNumberCard'
 import ChartCard from '~/components/cards/ChartCard'
 import TableCard from '~/components/cards/TableCard'
-import ContractTypeCard from '~/components/cards/ContractTypeCard'
+import ContractProceduresCard from '~/components/cards/ContractProceduresCard'
 
 export default {
   name: 'Index',
@@ -61,7 +61,7 @@ export default {
     BigNumberCard,
     ChartCard,
     TableCard,
-    ContractTypeCard,
+    ContractProceduresCard,
   },
 
   data: () => ({
@@ -86,6 +86,7 @@ export default {
     ],
     topContractors: {},
     topContracted: {},
+    contractingProcedureTypes: [],
     // TODO think of better names
     chartLabels: [],
     chartContractNumbers: [],
@@ -112,6 +113,7 @@ export default {
         contractCount,
         contractValue,
         contractAvgValue,
+        contractingProcedureTypes,
         topContracted,
         topContractors,
         contractsOverTime,
@@ -122,6 +124,7 @@ export default {
       this.bigNumbers[2].value = this.$formatCurrency(contractAvgValue)
       this.topContracted = topContracted
       this.topContractors = topContractors
+      this.contractingProcedureTypes = contractingProcedureTypes
 
       this.chartLabels = this.getChartLabels(contractsOverTime.number)
       this.chartContractNumbers = this.getChartDataset(contractsOverTime.number)
