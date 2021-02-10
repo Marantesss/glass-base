@@ -7,7 +7,7 @@
     <div class="table">
       <div v-for="(value, index) in shownValues" :key="index" class="row">
         <span class="position" v-text="index + 1"></span>
-        <span class="name" v-text="value.name"></span>
+        <span class="name line-clamp-2" v-text="value.name"></span>
         <span class="value" v-text="getFormattedValue(value.value)"></span>
       </div>
     </div>
@@ -66,7 +66,7 @@ export default {
 }
 
 .row {
-  @apply grid grid-cols-10;
+  @apply grid grid-cols-10 h-12 items-center;
 }
 
 .position {
@@ -74,10 +74,10 @@ export default {
 }
 
 .name {
-  @apply col-span-6;
+  @apply col-span-5;
 }
 
 .value {
-  @apply col-span-3 text-gray-light text-right;
+  @apply col-span-4 text-gray-light text-right;
 }
 </style>

@@ -52,7 +52,10 @@ module.exports = {
     },
   },
   variants: {},
-  plugins: [],
+  plugins: [
+    // line clamping
+    require('@tailwindcss/line-clamp'),
+  ],
   purge: {
     enabled: process.env.NODE_ENV === 'production',
     // Learn more on https://tailwindcss.com/docs/controlling-file-size/#removing-unused-css
