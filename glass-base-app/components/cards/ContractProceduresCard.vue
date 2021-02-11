@@ -15,7 +15,11 @@
           <span class="label-text" v-text="label"></span>
         </div>
       </div>
-      <DoughnutChart :chartdata="dataset" :options="chartOptions" />
+      <DoughnutChart
+        :height="200"
+        :chartdata="dataset"
+        :options="chartOptions"
+      />
     </div>
   </Card>
 </template>
@@ -55,7 +59,7 @@ export default {
         animation: {
           easing: 'easeInOutBack',
         },
-        maintainAspectRatio: false,
+        maintainAspectRatio: true,
         cutoutPercentage: 80,
         rotation: Math.PI,
         circumference: Math.PI,
@@ -115,7 +119,7 @@ export default {
 
 <style scoped>
 .labels {
-  @apply grid grid-cols-2 gap-6;
+  @apply grid grid-cols-2 gap-6 mb-6;
 }
 
 .label {
@@ -132,6 +136,7 @@ export default {
 }
 
 .content {
-  @apply grid grid-cols-1 gap-2;
+  @apply flex flex-col justify-between;
+  height: 92%; /* IDK why 100% overflows the card :) */
 }
 </style>
