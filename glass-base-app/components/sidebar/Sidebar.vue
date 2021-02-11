@@ -109,7 +109,7 @@ export default {
 }
 
 .sidebar-hamburguer {
-  @apply fixed rounded-lg p-1;
+  @apply fixed rounded-lg p-1 z-10;
   left: 10px;
   top: 10px;
 }
