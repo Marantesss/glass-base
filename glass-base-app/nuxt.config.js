@@ -55,6 +55,16 @@ export default {
     baseURL: process.env.NUXT_ENV_API_DOMAIN || 'http://localhost:8000',
   },
 
+  // Google Analytics module configuration: https://google-analytics.nuxtjs.org/
+  googleAnalytics: {
+    id: process.env.NUXT_ENV_GOOGLE_ANALYTICS_ID,
+    dev: process.env.NODE_ENV === 'development',
+    debug: {
+      enabled: process.env.NODE_ENV === 'development',
+      sendHitTask: process.env.NODE_ENV === 'production',
+    },
+  },
+
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
 }
