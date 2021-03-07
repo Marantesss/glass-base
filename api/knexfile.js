@@ -3,7 +3,13 @@ const { database } = require('./config.js')
 module.exports = {
   development: {
     client: database.client,
-    connection: database.database_url,
+    connection: {
+      host: database.host,
+      database: database.database,
+      user: database.user,
+      password: database.password,
+      port: database.port,
+    },
     pool: {
       min: 2,
       max: 10,
@@ -15,10 +21,7 @@ module.exports = {
   production: {
     client: database.client,
     connection: database.database_url,
-    pool: {
-      min: 2,
-      max: 10,
-    },
+    ssl: { rejectUnauthorized: false },
     migrations: {
       tableName: 'knex_migrations',
     },
