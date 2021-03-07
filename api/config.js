@@ -17,6 +17,7 @@ config.database = {
   database: process.env.DB_DATABASE || 'postgres',
   user: process.env.DB_USERNAME || 'admin',
   password: process.env.DB_PASSWORD || 'password',
+  database_url: process.env.DATABASE_URL,
 }
 
 config.seeder = {
