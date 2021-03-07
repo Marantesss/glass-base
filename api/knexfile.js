@@ -26,8 +26,8 @@ module.exports = {
   production: {
     client: database.client,
     connection: database.database_url,
-    ssl: { rejectUnauthorized: false },
-    // ssl: 'no-verify', // try this if above does not work for you
+    // ssl: { rejectUnauthorized: false },
+    ssl: 'no-verify', // try this if above does not work for you
     migrations: {
       tableName: 'knex_migrations',
     },
