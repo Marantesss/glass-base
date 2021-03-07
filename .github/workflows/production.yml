@@ -1,11 +1,7 @@
-name: ci
+name: Production CI/CD
 
 on:
   push:
-    branches:
-      - '!main'
-      - '!master'
-  pull_request:
     branches:
       - main
       - master
@@ -55,6 +51,15 @@ jobs:
       - name: Run tests 🧪
         run: yarn test
         working-directory: ${{ env.working-directory }}
+
+      - name: Deploy API 🚀
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: |
+          heroku login
+          heroku git:remote -a glass-base-api
+          git push --force heroku `git subtree split --prefix api HEAD`:main
+
 
   glass-base-app:
     runs-on: ${{ matrix.os }}
