@@ -1,6 +1,9 @@
 export default {
+  // SSR: false and TARGET: 'static' = SPA
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
+  // Target (https://go.nuxtjs.dev/config-target)
+  target: 'static', // default is 'server'
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
