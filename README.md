@@ -4,7 +4,7 @@ Glass base is essentially a web dashboard to visualize data from the [Portuguese
 
 The term 'glass' in Glass Base comes from the idea of glass houses, where everyone can see what is going on inside. We have decided on this name since the goal of this project is to be transparent on the cashflow of public money.
 
-What is important from this repository is the rough Base Gov REST API documentation. Feel free to use it for your own projects.
+What is important from this repository is the rough [Base Gov REST API documentation](#base-gov-rest-api). Feel free to use it for your own projects.
 
 ## Architecture
 
@@ -14,7 +14,7 @@ We are using docker compose for spawning the necessary services. However, it has
 
 In the following sections you can find the necessary documentation for understanding Base Gov's API.
 
-:alert: Keep in mind that the Base Gov REST API server tends to malfunction if you bombard it with requests, please use in with caution :alert:.
+:rotating_light: Keep in mind that the Base Gov REST API server tends to malfunction if you bombard it with requests, please use in with caution :rotating_light:.
 
 ### Early disclaimer
 
